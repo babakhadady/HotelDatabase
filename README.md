@@ -6,23 +6,7 @@ The domain of this application will be a hospitality management service. It will
 ---
 ## Timeline and task breakdown/assignment
 
-### Noel's responsibilities
-
-1. First item
-2. Second item
-3. Third item
-4. Fourth item
-
-### Babak's responsibilities
-
-1. First item
-2. Second item
-3. Third item
-4. Fourth item
-
-### Henry's responsibilities
-
-1. First item
-2. Second item
-3. Third item
-4. Fourth item
+| Task        | Person      | Deadline      |
+| :---        |    :---     |          :--- |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
