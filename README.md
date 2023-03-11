@@ -8,5 +8,13 @@ The domain of this application will be a hospitality management service. It will
 
 | Task        | Person      | Deadline      |
 | :---        |    :---     |          :--- |
-| Header      | Title       | Here's this   |
-| Paragraph   | Text        | And more      |
+| Create table on the frontend      | Title       | Here's this   |
+| Insert/delete button   | Text        | And more      |
+| Query Button with full implementation  | Text        | And more      |
+| Insert/delete button   | Text        | And more      |
+| Insert/delete button   | Text        | And more      |
+| Insert/delete button   | Text        | And more      |
+| Insert/delete button   | Text        | And more      |
+| Insert/delete button   | Text        | And more      |
+| Insert/delete button   | Text        | And more      |
+| Insert/delete button   | Text        | And more      |
