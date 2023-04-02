@@ -38,4 +38,3 @@ insert into roomContains values
 
 insert into roomContains values
 (202, 2, 'double', 'vacant', 200);
-

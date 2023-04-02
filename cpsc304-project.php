@@ -14,7 +14,11 @@
   To get the file to work, you must place it somewhere where your
   Apache server can run it, and you must rename it to have a ".php"
   extension.  You must also change the username and password on the
-  OCILogon below to be your ORACLE username and password -->
+  OCILogon below to be your ORACLE username and password 
+
+    Testing commits 
+-->
+
 
 <html>
     <head>
@@ -43,7 +47,7 @@
 
         <hr />
 
-        <h2>Update Name in DemoTable</h2>
+        <h2>Update a Reservation</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
         <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
