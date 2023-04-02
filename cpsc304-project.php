@@ -32,7 +32,7 @@
 
         <hr />
 
-        <h2>Insert Values into DemoTable</h2>
+        <h2>Insert a Reservation</h2>
         <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             Number: <input type="text" name="insNo"> <br /><br />
