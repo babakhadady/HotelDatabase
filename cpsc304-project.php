@@ -43,7 +43,7 @@
 
         <hr />
 
-        <h2>Update Name in DemoTable</h2>
+        <h2>Update a Reservation</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
         <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
