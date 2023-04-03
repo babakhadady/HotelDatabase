@@ -5,7 +5,7 @@
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
-$show_debug_alert_messages = True; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
+$show_debug_alert_messages = false; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
 
 function debugAlertMessage($message)
 {
@@ -115,8 +115,7 @@ function insertQueryRequest($id, $start, $end, $rn)
 function updateRoomStatusToOccupied($rn)
 {
     global $db_conn;
-    $occupied = "occupied";
-    executePlainSQL("UPDATE demoTable SET name='" . $occupied . "' WHERE name='" . $rn . "'");
+    executePlainSQL("UPDATE reserves SET status = occupied WHERE status ='" . $rn . "'");
     OCICommit($db_conn);
 }
 
@@ -136,21 +135,23 @@ function deleteQueryRequest($id)
     OCICommit($db_conn);
 }
 
-function aggregationGroupByRequest() 
+function aggregationGroupByRequest($roomStatus) 
 {
     global $db_conn;
-    
-    $result = executePlainSQL("SELECT RC.room_type, COUNT(*) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.room_type");
+
+    $result = executePlainSQL("SELECT RC.room_type, COUNT(*) FROM roomContains RC WHERE RC.status = '" . $roomStatus . "' GROUP BY RC.room_type");
+
+    echo $result;
 
     printResult($result);
     OCICommit($db_conn);
 }
 
-function aggregationHavingRequest() 
+function aggregationHavingRequest($number) 
 {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT RC.floor, MIN(RC.price) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.floor HAVING COUNT(*) > 0");
+    $result = executePlainSQL("SELECT RC.floor, MIN(RC.price) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.floor HAVING COUNT(*) > '" . $number . "'");
 
     printResult($result);
     OCICommit($db_conn);
