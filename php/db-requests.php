@@ -1,6 +1,6 @@
 <?php
 
-// require_once('cpsc304-project.php');
+require_once('cpsc304-project.php');
 
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
@@ -17,58 +17,99 @@ function debugAlertMessage($message)
 }
 
 // function resetReservationsRequest() {
-    // global $db_conn;
-    // $result = executePlainSQL("create table reservations
-    // (start_date varchar(20) not null,
-    // end_date varchar(40) not null,
-    // reservation_id int not null,
-    // primary key (reservation_id))");
+// global $db_conn;
+// $result = executePlainSQL("create table reservations
+// (start_date varchar(20) not null,
+// end_date varchar(40) not null,
+// reservation_id int not null,
+// primary key (reservation_id))");
 
-    // echo $result;
-    
-    // OCICommit($db_conn);
+// echo $result;
+
+// OCICommit($db_conn);
 // }
 
 
 
-// function selectAttributeQueryRequest($id, $start, $end) {
-//     global $db_conn;
+function selectAttributeQueryRequest($id, $start, $end)
+{
+    global $db_conn;
+    $tuple = array();
     
-//     $result = null;
-//     if ($id != '' && $start != '' && $end != '') {
-//         $result = executePlainSQL("SELECT * FROM reservations");
-//     }
-
-//     printResult($result);
-// }
 
 
-function projectTableRequest() {
-
+    $tuple = array(
+        ":start" => ($start != "") ? '' :  "start_date = " . $start,
+        ":end" => $end,
+        ":id" => $id
+    );
     
-    // echo '<p>' . $_GET['projectQueryRequest'] . '</p>';
-    
+    $query = "select from reservation where";
+
+    $count = 0;
+    foreach($tuple as $val) {
+        if (count > 0 && count < 2) {
+            $query = $query . "AND" . $val;
+        } else {
+
+        }
+
+        $count++;
+    }
+
+    $result = 
+
+    // printResult($result);
+    executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
+
 }
 
-function insertQueryRequest($id, $start, $end, $rn) {
+
+function projectTableRequest()
+{
+    $val = $_GET['projectQueryRequest'];
+
+    $tuple;
+
+    if ($val == "Reservations") {
+        $val = "reservations";
+
+        $tuple = array(
+            ":bind1" => $start,
+            ":bind2" => $end,
+            ":bind3" => $id
+        );
+        
+    } else if ($val == "Reserves") {
+        $val = "reserves";
+    } else if ($val == "Room") {
+        $val == "roomContains";
+    }
+
+
+    executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
+}
+
+function insertQueryRequest($id, $start, $end, $rn)
+{
     global $db_conn;
 
-    $reservationstuple = array (
+    $reservationstuple = array(
         ":bind1" => $start,
         ":bind2" => $end,
         ":bind3" => $id
     );
 
-    $reservationstuples = array (
+    $reservationstuples = array(
         $reservationstuple
     );
 
-    $reservestuple = array (
+    $reservestuple = array(
         ":bind1" => $id,
         ":bind2" => $rn
     );
 
-    $reservestuples = array (
+    $reservestuples = array(
         $reservestuple
     );
 
@@ -76,25 +117,26 @@ function insertQueryRequest($id, $start, $end, $rn) {
     executeBoundSQL("insert into reserves values (:bind1, :bind2)", $reservestuples);
     // updateRoomStatusToOccupied($rn);
     OCICommit($db_conn);
-
 }
 
-function updateRoomStatusToOccupied($rn) {
+function updateRoomStatusToOccupied($rn)
+{
     global $db_conn;
     $occupied = "occupied";
     executePlainSQL("UPDATE demoTable SET name='" . $occupied . "' WHERE name='" . $rn . "'");
     OCICommit($db_conn);
 }
 
-function deleteQueryRequest($id) {
+function deleteQueryRequest($id)
+{
     global $db_conn;
 
     //Getting the values from user and insert data into the table
-    $tuple = array (
+    $tuple = array(
         ":bind1" => $id
     );
 
-    $tupleArray = array (
+    $tupleArray = array(
         $tuple
     );
     executeBoundSQL("delete FROM reservations WHERE ", $tupleArray);
@@ -102,16 +144,16 @@ function deleteQueryRequest($id) {
 }
 
 
-function viewReservationsRequest() {
+function viewReservationsRequest()
+{
     global $db_conn;
-    
+
     $result = executePlainSQL("SELECT * FROM reservations");
 
     printResult($result);
-    
+
     // echo $result;
     OCICommit($db_conn);
-
 }
 
 
@@ -219,5 +261,3 @@ function disconnectFromDB()
     debugAlertMessage("Disconnect from Database");
     OCILogoff($db_conn);
 }
-
-?>

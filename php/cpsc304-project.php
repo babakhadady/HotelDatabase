@@ -134,7 +134,7 @@
     {
         if (connectToDB()) {
             if (array_key_exists('selectAttributeQueryRequest', $_GET)) {
-                // selectAttributeQueryRequest($_GET["selectID"], $_GET["selectStart"], $_GET["selectEnd"]);
+                selectAttributeQueryRequest($_GET["selectID"], $_GET["selectStart"], $_GET["selectEnd"]);
             } else if (array_key_exists('viewReservations', $_GET)) {
                 viewReservationsRequest();
             } else if (isset($_GET['resetTablesRequest'])) {
