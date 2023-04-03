@@ -18,11 +18,12 @@
 
 <html>
     <head>
-        <title>Hotel Management Application</title>
+        <title>CPSC 304 PHP/Oracle Demonstration</title>
     </head>
 
     <body>
         <h2>Reset</h2>
+        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
         <form method="POST" action="oracle-test.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
@@ -32,7 +33,7 @@
 
         <hr />
 
-        <h2>Insert a Reservation</h2>
+        <h2>Insert Values into DemoTable</h2>
         <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             Number: <input type="text" name="insNo"> <br /><br />
@@ -142,6 +143,7 @@
             echo "<table>";
             echo "<tr><th>ID</th><th>Name</th></tr>";
 
+            echo $result;
             while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
                 echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
             }
@@ -154,7 +156,7 @@
 
             // Your username is ora_(CWL_ID) and the password is a(student number). For example,
 			// ora_platypus is the username and a12345678 is the password.
-            $db_conn = OCILogon("ora_nilling4", "a65046468", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_henryk02", "a32523722", "dbhost.students.cs.ubc.ca:1522/stu");
 
             if ($db_conn) {
                 debugAlertMessage("Database is Connected");
@@ -216,11 +218,11 @@
         function handleCountRequest() {
             global $db_conn;
 
-            $result = executePlainSQL("SELECT Count(*) FROM demoTable");
+            $result = executePlainSQL("SELECT * FROM demoTable");
 
-            if (($row = oci_fetch_row($result)) != false) {
-                echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
-            }
+            echo $result;
+
+            printResult($result);
         }
 
         // HANDLE ALL POST ROUTES
