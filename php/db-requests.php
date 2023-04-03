@@ -139,8 +139,7 @@ function deleteQueryRequest($id)
 function aggregationGroupByRequest() 
 {
     global $db_conn;
-
-    echo "hello";
+    
     $result = executePlainSQL("SELECT RC.room_type, COUNT(*) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.room_type");
 
     printResult($result);
@@ -226,7 +225,7 @@ function executeBoundSQL($cmdstr, $list)
     global $db_conn, $success;
     $statement = OCIParse($db_conn, $cmdstr);
 
-    echo "TEST";
+    // echo "TEST";
 
     if (!$statement) {
         echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
@@ -271,7 +270,7 @@ function printResult($result)
 
 function connectToDB()
 {
-    echo "test";
+    // echo "test";
 
     global $db_conn;
 
