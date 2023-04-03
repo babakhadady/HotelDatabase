@@ -22,6 +22,8 @@
 
 <html>
 <link rel="stylesheet" href="style.php" media="screen">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 
 <head>
     <title>Hotel Management Application</title>
@@ -32,12 +34,10 @@
 
     <hr />
 
-    <h2>Reset Application</h2>
-    <form method="POST" action="cpsc304-project.php">
-        <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
-        <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-        <input type="submit" value="Reset" name="reset">
-    </form>
+    <!-- <h2>Reset Application</h2>
+    <form method="GET" action="cpsc304-project.php">
+        <input type="submit" value="Reset" name="resetTablesRequest">
+    </form> -->
 
 
     <h2> Update DataBase Page </h2>
@@ -50,13 +50,10 @@
         <input type="submit" value="Query">
     </form>
 
-    <hr />
-
-
 
     <h2>View All Reservations </h2>
     <form method="GET"> <!--refresh page when submitted-->
-        <input type="submit" value="View" name="viewReservations"></p>
+        <input type="submit" name="viewReservations"></p>
     </form>
 
     <!-- unnecessary ? -->
@@ -69,10 +66,14 @@
         <input type="submit" id="selectQueryRequest" name="selectQueryRequest">
     </form> -->
 
-    <h2>Select Attributes of a Certain Table</h2>
-    <form method="GET" action="cpsc304-project.php"> <!--refresh page when submitted-->
+    <h2>Select Certain Tuples From Reservation</h2>
+    <form method="GET"  action="cpsc304-project.php"> <!--refresh page when submitted-->
+    <input type="hidden" name="selectAttributeQueryRequest" />
         <p class="formfield">
-            Table: <input type="text" name="selectAttributeQueryRequest"> <br /><br />
+            Reservation ID: <input type="text" name="selectID" > <br /><br />
+            Start Date: <input type="text" name="selectStart"> <br /><br />
+            End Date: <input type="text" name="selectEnd"> <br /><br />
+
         </p>
         <input type="submit">
     </form>
@@ -132,17 +133,20 @@
     function handleRequest()
     {
         if (connectToDB()) {
-            if (array_key_exists('resetTablesRequest', $_POST)) {
-                handleResetRequest();
-            } else if (array_key_exists('updateQueryRequest', $_POST)) {
-                handleUpdateRequest();
-            } else if (array_key_exists('insertQueryRequest', $_POST)) {
-                handleInsertRequest();
-            }
-
+            if (array_key_exists('selectAttributeQueryRequest', $_GET)) {
+                selectAttributeQueryRequest($_GET["selectID"], $_GET["selectStart"], $_GET["selectEnd"]);
+            } else if (array_key_exists('viewReservations', $_GET)) {
+                viewReservationsRequest();
+            } else if (isset($_GET['resetTablesRequest'])) {
+                resetReservationsRequest();
+             } else if (isset($_GET['projectQueryRequest'])) {
+                projectTableRequest();
+             }
             disconnectFromDB();
         }
     }
+
+    handleRequest();
 
 
     ?>

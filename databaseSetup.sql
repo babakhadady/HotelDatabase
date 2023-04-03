@@ -1,6 +1,8 @@
 drop table reservations cascade constraints;
 drop table reserves;
 drop table roomContains;
+-- drop table guest;
+-- drop table owner;
 
 create table reservations
     (start_date varchar(20) not null,
@@ -9,15 +11,6 @@ create table reservations
     primary key (reservation_id));
  
 grant ALL PRIVILEGES on reservations to public;
-
-create table reserves
-    (reservation_id int not null,
-	reserves_number int not null,
-    primary key (reservation_id, reserves_number),
-	foreign key (reservation_id) references reservations
-	ON DELETE CASCADE);
- 
-grant ALL PRIVILEGES on reserves to public;
 
 create table roomContains
     (room_number int not null,
@@ -29,34 +22,67 @@ create table roomContains
  
 grant ALL PRIVILEGES on roomContains to public;
 
-/*
-roomContains 
-*/
-insert into roomContains values(200, 2, 'single', 'vacant', 150);
-insert into roomContains values(201, 2, 'single', 'vacant', 150);
-insert into roomContains values(202, 2, 'double', 'vacant', 200);
+create table reserves
+    (reservation_id int not null,
+	room_number int not null,
+    primary key (reservation_id, room_number),
+	foreign key (reservation_id) references reservations
+	    ON DELETE CASCADE,
+    foreign key (room_number) references roomContains
+        ON DELETE CASCADE);
+ 
+grant ALL PRIVILEGES on reserves to public;
 
-insert into roomContains values(300, 3, 'single', 'occupied', 150);
-insert into roomContains values(301, 3, 'double', 'vacant', 200);
-insert into roomContains values(302, 3, 'queen', 'vacant', 250);
+-- create table guest
+--     (guest_id int not null,
+-- 	card_number int not null,
+-- 	guest_name varchar(20) not null,
+-- 	email varchar(20) not null,
+--     primary key (guest_id));
+ 
+-- grant select on guest to public;
 
-insert into roomContains values(400, 4, 'single', 'occupied', 150);
-insert into roomContains values(401, 4, 'double', 'occupied', 200);
-insert into roomContains values(402, 4, 'king', 'vacant', 300);
+-- create table owner
+--     (owner_name varchar(20) not null,
+-- 	email varchar(20) not null,
+--     primary key (owner_name));
+ 
+-- grant select on owner to public;
 
-insert into roomContains values(500, 5, 'single', 'occupied', 150);
-insert into roomContains values(501, 5, 'double', 'vacant', 200);
-insert into roomContains values(502, 5, 'master', 'occupied', 350);
+-- create table belongsTo
+--     (belongsTo_id int not null,
+-- 	reservation_id int not null,
+--     primary key (belongsTo_id, reservation_id));
+ 
+-- grant select on belongsTo to public;
 
-/*
-reservations 
-*/
-insert into reservations values('jan 10', 'jan 12', 1);
-insert into reservations values('jan 10', 'jan 12', 2);
 
-/*
-reserves 
-*/
-insert into reserves values(2, 300);
-insert into reserves values(2, 301);
-insert into reserves values(1, 302);
+insert into roomContains values
+(200, 2, 'single', 'vacant', 150);
+
+insert into roomContains values
+(201, 2, 'single', 'vacant', 150);
+
+insert into roomContains values
+(202, 2, 'double', 'vacant', 200);
+
+insert into reservations values
+('jan 1', 'jan 2', 1);
+
+insert into reservations values
+('jan 4', 'jan 7', 6);
+
+-- insert into guest values
+-- ('123456', 'Henry Kim', '24429988', 'walkingbuddies2002@gmail.com');
+
+-- insert into guest values
+-- ('222222', 'Benry Bim', '48603847', 'zedandshen@gmail.com');
+
+-- insert into guest values
+-- ('123456', 'Jenry Jim', '66739853', 'yuumicarry@gmail.com');
+
+-- insert into guest values
+-- ('444444', 'Tenry Tim', '12546434', 'thisisnotanemail@gmail.com');
+
+-- insert into guest values
+-- ('666666', 'Lenry Lim', '89745676', 'impostersussy@gmail.com');
