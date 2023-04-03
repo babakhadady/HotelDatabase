@@ -33,35 +33,26 @@ function debugAlertMessage($message)
 
 function selectAttributeQueryRequest($id, $start, $end)
 {
-    global $db_conn;
-    $tuple = array();
+    // global $db_conn;
+    // $tuple = array();
     
+    // $query = "select from reservation where";
 
+    // $count = 0;
+    // foreach($tuple as $val) {
+    //     if ($count == 1 || $count == 2) {
+    //         $query = $query . "AND" . $val;
+    //     } else {
+    //         $query = $query . $val;
+    //     }
 
-    $tuple = array(
-        ":start" => ($start != "") ? '' :  "start_date = " . $start,
-        ":end" => $end,
-        ":id" => $id
-    );
-    
-    $query = "select from reservation where";
+    //     $count++;
+    // }
 
-    $count = 0;
-    foreach($tuple as $val) {
-        if (count > 0 && count < 2) {
-            $query = $query . "AND" . $val;
-        } else {
+    // $result = 
 
-        }
-
-        $count++;
-    }
-
-    $result = 
-
-    // printResult($result);
-    executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
-
+    // // printResult($result);
+    // executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
 }
 
 
@@ -69,16 +60,16 @@ function projectTableRequest()
 {
     $val = $_GET['projectQueryRequest'];
 
-    $tuple;
+    // $tuple;
 
     if ($val == "Reservations") {
         $val = "reservations";
 
-        $tuple = array(
-            ":bind1" => $start,
-            ":bind2" => $end,
-            ":bind3" => $id
-        );
+        // $tuple = array(
+        //     ":bind1" => $start,
+        //     ":bind2" => $end,
+        //     ":bind3" => $id
+        // );
         
     } else if ($val == "Reserves") {
         $val = "reserves";
@@ -87,7 +78,7 @@ function projectTableRequest()
     }
 
 
-    executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
+    // executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
 }
 
 function insertQueryRequest($id, $start, $end, $rn)
