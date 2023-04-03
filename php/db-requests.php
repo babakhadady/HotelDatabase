@@ -143,6 +143,47 @@ function deleteQueryRequest($id)
     OCICommit($db_conn);
 }
 
+function aggregationGroupByRequest() 
+{
+    global $db_conn;
+
+    echo "hello";
+    $result = executePlainSQL("SELECT RC.room_type, COUNT(*) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.room_type");
+
+    printResult($result);
+    OCICommit($db_conn);
+}
+
+function aggregationHavingRequest() 
+{
+    global $db_conn;
+
+    $result = executePlainSQL("SELECT RC.floor, MIN(RC.price) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.floor HAVING COUNT(*) > 0");
+
+    printResult($result);
+    OCICommit($db_conn);
+}
+
+function aggregationNestedRequest() 
+{
+    global $db_conn;
+
+    $result = executePlainSQL("SELECT RC.room_number FROM roomContains RC WHERE RC.status = 'vacant' AND RC.price >= all (SELECT MAX(RC2.price) FROM roomContains RC2 WHERE RC2.status = 'vacant' GROUP BY RC2.floor)");
+
+    printResult($result);
+    OCICommit($db_conn);
+}
+
+function divisionRequest() 
+{
+    global $db_conn;
+
+    $result = executePlainSQL("SELECT R.reservation_id FROM reservations R WHERE NOT EXISTS ((SELECT RC.room_number FROM roomContains RC WHERE RC.floor = 3) minus (SELECT Res.reserves_number FROM reserves Res WHERE R.reservation_id = Res.reservation_id))");
+
+    printResult($result);
+    OCICommit($db_conn);
+}
+
 
 function viewReservationsRequest()
 {
