@@ -55,7 +55,7 @@ insert into reservations values('jan 10', 'jan 12', 1);
 insert into reservations values('jan 10', 'jan 12', 2);
 
 /*
-reservations 
+reserves 
 */
 insert into reserves values(2, 300);
 insert into reserves values(2, 301);
