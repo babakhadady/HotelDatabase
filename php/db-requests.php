@@ -1,11 +1,11 @@
 <?php
 
-require_once('cpsc304-project.php');
+// require_once('cpsc304-project.php');
 
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
-$show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
+$show_debug_alert_messages = True; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
 
 function debugAlertMessage($message)
 {
@@ -83,6 +83,8 @@ function projectTableRequest()
 
 function insertQueryRequest($id, $start, $end, $rn)
 {
+
+    echo "running";
     global $db_conn;
 
     $reservationstuple = array(
@@ -228,6 +230,8 @@ function printResult($result)
 
 function connectToDB()
 {
+    echo "test";
+
     global $db_conn;
 
     // Your username is ora_(CWL_ID) and the password is a(student number). For example,

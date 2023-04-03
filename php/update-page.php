@@ -72,12 +72,13 @@
     </form>
 
     <?php
-
     require_once('db-requests.php');
 
     function handleRequest()
     {
+
         if (connectToDB()) {
+
             if (array_key_exists('insertQueryRequest', $_POST)) {
                 if (isset($_POST["insID"]) && isset($_POST["insStart"]) && isset($_POST["insEnd"]) && isset($_POST["insRN"])) {
                     insertQueryRequest($_POST["insID"], $_POST["insStart"], $_POST["insEnd"], $_POST["insRN"]);
