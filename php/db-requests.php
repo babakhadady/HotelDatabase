@@ -33,7 +33,30 @@ function debugAlertMessage($message)
 
 function selectAttributeQueryRequest($id, $start, $end)
 {
-    // global $db_conn;
+    global $db_conn;
+    $value = $_GET['whereBody'];
+    $column = $_GET['projectTable'];
+
+    if (empty($value)) {
+        return;
+    }
+    $query = "select * from reservations where " . $column . " = " . $value;
+
+    echo $query;
+
+    $result = executePlainSQL($query);
+
+    $arr = array();
+
+    array_push($arr, "reservation_id");
+    array_push($arr, "start_date");
+    array_push($arr, "end_date");
+
+    printResult($result, $arr, 'reservations');
+    OCICommit($db_conn);
+
+    // select * from reservations where reservation_id = 6
+
     // $tuple = array();
 
     // $query = "select from reservation where";

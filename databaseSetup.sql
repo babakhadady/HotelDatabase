@@ -1,8 +1,11 @@
 drop table reservations cascade constraints;
-drop table reserves;
-drop table roomContains;
--- drop table guest;
--- drop table owner;
+drop table reserves cascade constraints;
+drop table roomContains cascade constraints;
+drop table guest;
+drop table hotel_owner;
+drop table belongsTo;
+drop table HotelOwns1;
+drop table HotelOwns2;
 
 create table reservations
     (start_date varchar(20) not null,
@@ -33,29 +36,71 @@ create table reserves
  
 grant ALL PRIVILEGES on reserves to public;
 
--- create table guest
---     (guest_id int not null,
--- 	card_number int not null,
--- 	guest_name varchar(20) not null,
--- 	email varchar(20) not null,
---     primary key (guest_id));
+create table guest
+    (guest_id int not null,
+	card_number int not null,
+	guest_name varchar(20) not null,
+	email varchar(30) not null,
+    primary key (guest_id));
  
--- grant select on guest to public;
+grant select on guest to public;
 
--- create table owner
---     (owner_name varchar(20) not null,
--- 	email varchar(20) not null,
---     primary key (owner_name));
+create table hotel_owner
+    (owner_name varchar(20) not null,
+	email varchar(20) not null,
+    primary key (owner_name));
  
--- grant select on owner to public;
+grant select on hotel_owner to public;
 
--- create table belongsTo
---     (belongsTo_id int not null,
--- 	reservation_id int not null,
---     primary key (belongsTo_id, reservation_id));
+create table belongsTo
+    (belongsTo_id int not null,
+	reservation_id int not null,
+    primary key (belongsTo_id, reservation_id));
  
--- grant select on belongsTo to public;
+grant select on belongsTo to public;
 
+CREATE TABLE HotelOwns1 (
+location  CHAR(40) NOT NULL,
+	name     CHAR(20), 
+	PRIMARY KEY (location)
+);
+
+grant select on HotelOwns1 to public;
+
+CREATE TABLE HotelOwns2 (
+location  CHAR(40) NOT NULL,
+	owner_name varchar(20) NOT NULL,
+	id INTEGER,
+	acquisition_date CHAR(20) NOT NULL,
+	PRIMARY KEY (id),
+FOREIGN KEY (location) REFERENCES HotelOwns1
+	ON DELETE CASCADE,
+FOREIGN KEY (owner_name) REFERENCES hotel_owner
+	ON DELETE CASCADE
+);
+
+grant select on HotelOwns2 to public;
+
+insert into reservations values
+('jan 1', 'jan 2', 1);
+
+insert into reservations values
+('jan 4', 'jan 7', 6);
+
+insert into reservations values
+('jan 4', 'jan 7', 101234);
+
+insert into reservations values
+('jan 4', 'jan 7', 101235);
+
+insert into reservations values
+('jan 4', 'jan 7', 101236);
+
+insert into reservations values
+('jan 4', 'jan 7', 101237);
+
+insert into reservations values
+('jan 4', 'jan 7', 101238);
 
 insert into roomContains values
 (200, 2, 'single', 'vacant', 150);
@@ -66,23 +111,72 @@ insert into roomContains values
 insert into roomContains values
 (202, 2, 'double', 'vacant', 200);
 
-insert into reservations values
-('jan 1', 'jan 2', 1);
+insert into roomContains values
+(401, 2, 'double', 'vacant', 200);
 
-insert into reservations values
-('jan 4', 'jan 7', 6);
+insert into roomContains values
+(501, 2, 'double', 'vacant', 200);
 
--- insert into guest values
--- ('123456', 'Henry Kim', '24429988', 'walkingbuddies2002@gmail.com');
+insert into roomContains values
+(601, 2, 'double', 'vacant', 200);
 
--- insert into guest values
--- ('222222', 'Benry Bim', '48603847', 'zedandshen@gmail.com');
+insert into roomContains values
+(701, 2, 'double', 'vacant', 200);
 
--- insert into guest values
--- ('123456', 'Jenry Jim', '66739853', 'yuumicarry@gmail.com');
+insert into roomContains values
+(801, 2, 'double', 'vacant', 200);
 
--- insert into guest values
--- ('444444', 'Tenry Tim', '12546434', 'thisisnotanemail@gmail.com');
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101234, 401);
 
--- insert into guest values
--- ('666666', 'Lenry Lim', '89745676', 'impostersussy@gmail.com');
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101235, 501);
+
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101236, 601);
+
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101237, 701);
+
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101238, 801);
+
+insert into guest values
+('123456', '24429988', 'Henry Kim', 'walkingbuddies2002@gmail.com');
+
+insert into guest values
+('222222', '48603847', 'Benry Bim', 'zedandshen@gmail.com');
+
+insert into guest values
+('123457',  '66739853', 'Jenry Jim', 'yuumicarry@gmail.com');
+
+insert into guest values
+('444444', '12546434', 'Tenry Tim', 'thisisnotanemail@gmail.com');
+
+insert into guest values
+('666666', '89745676', 'Lenry Lim', 'impostersussy@gmail.com');
+
+INSERT
+INTO hotel_owner(owner_name, email)
+VALUES ('Henry Kim', 'henry@gmail.com');
+
+INSERT
+INTO hotel_owner(owner_name, email)
+VALUES ('Noel Illing', 'noel@gmail.com');
+
+INSERT
+INTO hotel_owner(owner_name, email)
+VALUES ('Babak Bob', 'babak@gmail.com');
+
+INSERT
+INTO hotel_owner(owner_name, email)
+VALUES ('Henry Joe', 'henryJoe@gmail.com');
+
+INSERT
+INTO hotel_owner(owner_name, email)
+VALUES ('Henry Cam', 'henryCam@gmail.com');
