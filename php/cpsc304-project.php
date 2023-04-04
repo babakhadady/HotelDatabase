@@ -72,7 +72,7 @@
             Select a Column:
             <select name="projectTable">
                 <?php
-                $tables = array("Start date", "End date", "Reservation ID");
+                $tables = array("start_date", "end_date", "reservation_id");
                 foreach ($tables as $table) {
                     echo '<option value="' . $table . '"' . (($_GET['projectTable'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
                 }

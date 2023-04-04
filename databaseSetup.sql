@@ -1,9 +1,11 @@
 drop table reservations cascade constraints;
-drop table reserves;
-drop table roomContains;
+drop table reserves cascade constraints;
+drop table roomContains cascade constraints;
 drop table guest;
 drop table hotel_owner;
 drop table belongsTo;
+drop table HotelOwns1;
+drop table HotelOwns2;
 
 create table reservations
     (start_date varchar(20) not null,
@@ -57,6 +59,48 @@ create table belongsTo
  
 grant select on belongsTo to public;
 
+CREATE TABLE HotelOwns1 (
+location  CHAR(40) NOT NULL,
+	name     CHAR(20), 
+	PRIMARY KEY (location)
+);
+
+grant select on HotelOwns1 to public;
+
+CREATE TABLE HotelOwns2 (
+location  CHAR(40) NOT NULL,
+	owner_name varchar(20) NOT NULL,
+	id INTEGER,
+	acquisition_date CHAR(20) NOT NULL,
+	PRIMARY KEY (id),
+FOREIGN KEY (location) REFERENCES HotelOwns1
+	ON DELETE CASCADE,
+FOREIGN KEY (owner_name) REFERENCES hotel_owner
+	ON DELETE CASCADE
+);
+
+grant select on HotelOwns2 to public;
+
+insert into reservations values
+('jan 1', 'jan 2', 1);
+
+insert into reservations values
+('jan 4', 'jan 7', 6);
+
+insert into reservations values
+('jan 4', 'jan 7', 101234);
+
+insert into reservations values
+('jan 4', 'jan 7', 101235);
+
+insert into reservations values
+('jan 4', 'jan 7', 101236);
+
+insert into reservations values
+('jan 4', 'jan 7', 101237);
+
+insert into reservations values
+('jan 4', 'jan 7', 101238);
 
 insert into roomContains values
 (200, 2, 'single', 'vacant', 150);
@@ -67,11 +111,20 @@ insert into roomContains values
 insert into roomContains values
 (202, 2, 'double', 'vacant', 200);
 
-insert into reservations values
-('jan 1', 'jan 2', 1);
+insert into roomContains values
+(401, 2, 'double', 'vacant', 200);
 
-insert into reservations values
-('jan 4', 'jan 7', 6);
+insert into roomContains values
+(501, 2, 'double', 'vacant', 200);
+
+insert into roomContains values
+(601, 2, 'double', 'vacant', 200);
+
+insert into roomContains values
+(701, 2, 'double', 'vacant', 200);
+
+insert into roomContains values
+(801, 2, 'double', 'vacant', 200);
 
 INSERT
 INTO reserves(reservation_id, room_number)
