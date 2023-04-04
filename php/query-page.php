@@ -46,9 +46,17 @@
 
 
 
-    <h3>Find the most expensive available room</h3>
+    <h3>Find the most cheap/expensive available room</h3>
     <form method="GET" action="query-page.php"> <!--refresh page when submitted-->
         <!-- <input type="hidden" id="nestedQueryRequest" name="nestedQueryRequest" value="true"> -->
+        <select name="room-price-table">
+                <?php
+                $tables = array("cheapest", "most expensive");
+                foreach ($tables as $table) {
+                    echo '<option value="' . $table . '"' . (($_GET['room-price-table'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
+                }
+                ?>
+            </select>
         <input type="submit" class="btn btn-primary" name="do_nestedQueryRequest"></p>
     </form>
 
@@ -56,6 +64,14 @@
     <h3>Find reservation ID that reserved all rooms on 3rd floor</h3>
     <form method="GET" action="query-page.php"> <!--refresh page when submitted-->
         <!-- <input type="hidden" id="divisionRequest" name="divisionRequest" value="true"> -->
+        <select name="floor-table">
+                <?php
+                $tables = array("2", "3", "4", "5");
+                foreach ($tables as $table) {
+                    echo '<option value="' . $table . '"' . (($_GET['floor-table'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
+                }
+                ?>
+            </select>
         <input type="submit" class="btn btn-primary" name="do_divisionRequest"></p>
     </form>
 
@@ -76,11 +92,11 @@
                 }
             } else if (array_key_exists('do_nestedQueryRequest', $_GET)) {
                 if (isset($_GET['do_nestedQueryRequest'])) {
-                    aggregationNestedRequest();
+                    aggregationNestedRequest($_GET['room-price-table']);
                 }
             } else if (array_key_exists('do_divisionRequest', $_GET)) {
                 if (isset($_GET['do_divisionRequest'])) {
-                    divisionRequest();
+                    divisionRequest($_GET['floor-table']);
                 }
             }
 
