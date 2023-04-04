@@ -15,16 +15,32 @@
 
     </form>
 
-    <h3> Find number of vacant rooms for each room type </h3>
+    <h3> Find number of vacant or occupied rooms for each room type </h3>
 
     <form method="GET" action="query-page.php"> <!--refresh page when submitted-->
             <!-- <input type="hidden" id="groupbyQueryRequest" name="groupbyQueryRequest" value="true"> -->
+            <select name="room-status-table">
+                <?php
+                $tables = array("vacant", "occupied");
+                foreach ($tables as $table) {
+                    echo '<option value="' . $table . '"' . (($_GET['room-status-table'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
+                }
+                ?>
+            </select>
             <input type="submit" class="btn btn-primary" name="do_groupbyQueryRequest"></p>
     </form>
 
-    <h3>For each floor, grab the cheapest available room</h3>
+    <h3>For each floor that has more than X amount of available rooms, grab the cheapest available room</h3>
     <form method="GET" action="query-page.php"> <!--refresh page when submitted-->
         <!-- <input type="hidden" id="havingQueryRequest" name="havingQueryRequest" value="true"> -->
+        <select name="number-table">
+                <?php
+                $tables = array("0", "1", "2", "3");
+                foreach ($tables as $table) {
+                    echo '<option value="' . $table . '"' . (($_GET['number-table'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
+                }
+                ?>
+            </select>
         <input type="submit" class="btn btn-primary" name="do_havingQueryRequest"></p>
     </form>
 
@@ -52,11 +68,11 @@
         if (connectToDB()) {
             if (array_key_exists('do_groupbyQueryRequest', $_GET)) {
                 if (isset($_GET['do_groupbyQueryRequest'])) {
-                    aggregationGroupByRequest();
+                    aggregationGroupByRequest($_GET['room-status-table']);
                 }
             } else if (array_key_exists('do_havingQueryRequest', $_GET)) {
                 if (isset($_GET['do_havingQueryRequest'])) {
-                    aggregationHavingRequest();
+                    aggregationHavingRequest($_GET['number-table']);
                 }
             } else if (array_key_exists('do_nestedQueryRequest', $_GET)) {
                 if (isset($_GET['do_nestedQueryRequest'])) {
