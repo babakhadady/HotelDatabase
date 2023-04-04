@@ -35,7 +35,7 @@ function selectAttributeQueryRequest($id, $start, $end)
 {
     global $db_conn;
     // $tuple = array();
-    
+
     // $query = "select from reservation where";
 
     // $count = 0;
@@ -61,26 +61,97 @@ function selectAttributeQueryRequest($id, $start, $end)
 function projectTableRequest()
 {
     $val = $_GET['projectQueryRequest'];
+    global $db_conn;
+    $array = array();
+    $columns = array();
 
-    // $tuple;
+    $count = 1;
 
     if ($val == "Reservations") {
         $val = "reservations";
 
-        // $tuple = array(
-        //     ":bind1" => $start,
-        //     ":bind2" => $end,
-        //     ":bind3" => $id
-        // );
-        
+        if (isset($_GET['attrReservationsID'])) {
+            array_push($array, "reservation_id");
+            array_push($columns, "Reservation ID");
+            $count += 1;
+        }
+
+        if (isset($_GET['attrStartDate'])) {
+            array_push($array, "start_date");
+            array_push($columns, "Start Date");
+            $count += 1;
+        }
+
+        if (isset($_GET['attrEndDate'])) {
+            array_push($array, "end_date");
+            array_push($columns, "End Date");
+            $count += 1;
+        }
     } else if ($val == "Reserves") {
         $val = "reserves";
+
+        if (isset($_GET['attrReservationsID'])) {
+            array_push($array, "reservation_id");
+            array_push($columns, "Reservation ID");
+            $count += 1;
+        }
+
+        if (isset($_GET['attrRoomNumber'])) {
+            array_push($array, "room_number");
+            array_push($columns, "Room Number");
+            $count += 1;
+        }
     } else if ($val == "Room") {
-        $val == "roomContains";
+        $val = "roomContains";
+
+        if (isset($_GET['attrRoomNumber'])) {
+            array_push($array, "room_number");
+            array_push($columns, "Room Number");
+            $count += 1;
+        }
+
+        if (isset($_GET['attrRoomType'])) {
+            array_push($array, "room_type");
+            array_push($columns, "Room Type");
+            $count += 1;
+        }
+
+        if (isset($_GET['attrRoomFloor'])) {
+            array_push($array, "floor");
+            array_push($columns, "Floor");
+            $count += 1;
+        }
+
+        if (isset($_GET['attrRoomStatus'])) {
+            array_push($array, "status");
+            array_push($columns, "Status");
+            $count += 1;
+        }
+
+        if (isset($_GET['attrRoomPrice'])) {
+            array_push($array, "price");
+            array_push($columns, "Price");
+            $count += 1;
+        }
     }
 
+    $queryString = "SELECT ";
 
-    // executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
+
+    for ($x = 0; $x < $count - 1; $x++) {
+        if ($count - 2 == $x) {
+            $queryString = $queryString . $array[$x] . " ";
+        } else {
+            $queryString = $queryString . $array[$x] . ", ";
+        }
+    }
+
+    $queryString = $queryString . "FROM " . $val;
+
+   $result = executePlainSQL($queryString);
+
+    printResult($result, $columns, $_GET['projectQueryRequest']);
+    OCICommit($db_conn);
 }
 
 function insertQueryRequest($id, $start, $end, $rn)
@@ -107,6 +178,9 @@ function insertQueryRequest($id, $start, $end, $rn)
     $reservestuples = array(
         $reservestuple
     );
+
+
+
 
     executeBoundSQL("insert into reservations values (:bind1, :bind2, :bind3)", $reservationstuples);
     executeBoundSQL("insert into reserves values (:bind1, :bind2)", $reservestuples);
@@ -137,7 +211,7 @@ function deleteQueryRequest($id)
     OCICommit($db_conn);
 }
 
-function aggregationGroupByRequest($roomStatus) 
+function aggregationGroupByRequest($roomStatus)
 {
     global $db_conn;
 
@@ -155,7 +229,7 @@ function aggregationGroupByRequest($roomStatus)
     OCICommit($db_conn);
 }
 
-function aggregationHavingRequest($number) 
+function aggregationHavingRequest($number)
 {
     global $db_conn;
 
@@ -171,7 +245,7 @@ function aggregationHavingRequest($number)
     OCICommit($db_conn);
 }
 
-function aggregationNestedRequest() 
+function aggregationNestedRequest()
 {
     global $db_conn;
 
@@ -187,7 +261,7 @@ function aggregationNestedRequest()
     OCICommit($db_conn);
 }
 
-function divisionRequest() 
+function divisionRequest()
 {
     global $db_conn;
 
@@ -204,10 +278,10 @@ function viewReservationsRequest()
 
     $result = executePlainSQL("SELECT * FROM reservations");
 
-    $columns = array (
+    $columns = array(
         "Reservation ID",
         "Start Date",
-        "End Date"  
+        "End Date"
     );
 
     printResult($result, $columns, "Reservations");
