@@ -69,13 +69,19 @@
     <h2>Select Certain Tuples From Reservation</h2>
     <form method="GET"  action="cpsc304-project.php"> <!--refresh page when submitted-->
     <input type="hidden" name="selectAttributeQueryRequest" />
-        <p class="formfield">
-            Reservation ID: <input type="text" name="selectID" > <br /><br />
-            Start Date: <input type="text" name="selectStart"> <br /><br />
-            End Date: <input type="text" name="selectEnd"> <br /><br />
-
-        </p>
-        <input type="submit">
+            Select a Column:
+            <select name="projectTable">
+                <?php
+                $tables = array("Start date", "End date", "Reservation ID");
+                foreach ($tables as $table) {
+                    echo '<option value="' . $table . '"' . (($_GET['projectTable'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
+                }
+                ?>
+            </select>
+            <p class="formfield">
+            Value: <input type="text" name="whereBody"> <br /><br />
+            </p>
+            <input type="submit">
     </form>
 
     <h2>Select a Table and Attributes to View</h2>

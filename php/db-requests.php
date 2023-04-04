@@ -33,7 +33,7 @@ function debugAlertMessage($message)
 
 function selectAttributeQueryRequest($id, $start, $end)
 {
-    // global $db_conn;
+    global $db_conn;
     // $tuple = array();
     
     // $query = "select from reservation where";
@@ -53,6 +53,8 @@ function selectAttributeQueryRequest($id, $start, $end)
 
     // // printResult($result);
     // executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
+
+
 }
 
 
