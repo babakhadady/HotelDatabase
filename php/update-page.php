@@ -63,10 +63,8 @@
     <form method="GET" action="update-page.php"> <!--refresh page when submitted-->
         <p class="formfield">
             Reservation ID: <input type="text" name="delID"> <br /><br />
-            Start Date: <input type="text" name="delID"> <br /><br />
-            End Date: <input type="text" name="delID"> <br /><br />
-            Reservation ID: <input type="text" name="delID"> <br /><br />
-
+            Start Date: <input type="text" name="delStart"> <br /><br />
+            End Date: <input type="text" name="delEnd"> <br /><br />
         </p>
         <input type="submit" name="deleteQueryRequest"></p>
     </form>

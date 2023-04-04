@@ -177,9 +177,6 @@ function insertQueryRequest($id, $start, $end, $rn)
         $reservestuple
     );
 
-
-
-
     executeBoundSQL("insert into reservations values (:bind1, :bind2, :bind3)", $reservationstuples);
     executeBoundSQL("insert into reserves values (:bind1, :bind2)", $reservestuples);
     // updateRoomStatusToOccupied($rn);
@@ -197,15 +194,42 @@ function deleteQueryRequest($id)
 {
     global $db_conn;
 
-    //Getting the values from user and insert data into the table
-    $tuple = array(
-        ":bind1" => $id
-    );
 
-    $tupleArray = array(
-        $tuple
-    );
-    executeBoundSQL("delete FROM reservations WHERE ", $tupleArray);
+    $array = array();
+    $columns = array();
+    $count = 1;
+
+    if ($_GET["delID"] != "") {
+        array_push($array, "reservation_id = " . $_GET["delID"]);
+        array_push($columns, "Reservation ID");
+        $count++;
+    }
+
+    if ($_GET["delStart"] != "") {
+        array_push($array, "start_date = " . "'" . $_GET["delStart"] ."'");
+        array_push($columns, "Start Date");
+        $count++;
+    }
+
+    if ($_GET["delEnd"] != "") {
+        array_push($array, "end_date = " . "'" . $_GET["delEnd"] ."'");
+        array_push($columns, "End Date");
+        $count++;
+    }
+
+    
+    $queryString = "DELETE FROM reservations WHERE ";
+
+    for ($x = 0; $x < $count - 1; $x++) {
+        if ($x + 1 < $count - 1) {
+            $queryString = $queryString . $array[$x] . " AND ";
+        } else {
+            $queryString = $queryString . $array[$x];
+        }
+    }
+
+    executePlainSQL($queryString);
+
     OCICommit($db_conn);
 }
 
@@ -274,7 +298,7 @@ function viewReservationsRequest()
 {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT * FROM reservations");
+    $result = executePlainSQL("SELECT reservation_id, start_date, end_date FROM reservations");
 
     $columns = array(
         "Reservation ID",
@@ -366,7 +390,7 @@ function printResult($result, $columns, $name)
     echo "</tr>";
 
     while ($row = OCI_fetch_array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td></tr>"; //or just use "echo $row[0]"
+        echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" . $row[5] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
     echo "</table>";
