@@ -8,16 +8,14 @@ $border = '1px solid';
 ?>
 
 table, td, th {
-border: 1px solid;
 border-collapse: collapse;
 
 margin-left: auto;
 margin-right: auto;
 }
 
-td, th {
+tr, th {
   border: 1px solid #ddd;
-  padding: 8px;
 }
 
 tr:nth-child(even){background-color: #f2f2f2;}
@@ -36,6 +34,16 @@ th {
 }
 
 
+div {
+  display: flex;
+flex-direction: column;
+align-items: center;
+width: 50%;
+margin-left: auto;
+margin-right: auto;
+
+
+}
 
 body {
 display: flex;

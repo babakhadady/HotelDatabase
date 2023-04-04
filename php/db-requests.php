@@ -5,7 +5,7 @@
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
 $db_conn = NULL; // edit the login credentials in connectToDB()
-$show_debug_alert_messages = True; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
+$show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
 
 function debugAlertMessage($message)
 {
@@ -142,7 +142,13 @@ function aggregationGroupByRequest()
     
     $result = executePlainSQL("SELECT RC.room_type, COUNT(*) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.room_type");
 
-    printResult($result);
+    $columns = array(
+        "Room Type",
+        "Count"
+    );
+
+
+    printResult($result, $columns, "Room");
     OCICommit($db_conn);
 }
 
@@ -152,7 +158,13 @@ function aggregationHavingRequest()
 
     $result = executePlainSQL("SELECT RC.floor, MIN(RC.price) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.floor HAVING COUNT(*) > 0");
 
-    printResult($result);
+
+    $columns = array(
+        "Floor",
+        "Min Price"
+    );
+
+    printResult($result, $columns, "Room");
     OCICommit($db_conn);
 }
 
@@ -162,7 +174,13 @@ function aggregationNestedRequest()
 
     $result = executePlainSQL("SELECT RC.room_number FROM roomContains RC WHERE RC.status = 'vacant' AND RC.price >= all (SELECT MAX(RC2.price) FROM roomContains RC2 WHERE RC2.status = 'vacant' GROUP BY RC2.floor)");
 
-    printResult($result);
+    $columns = array(
+        "Number",
+
+    );
+
+    printResult($result, $columns, "Room");
+
     OCICommit($db_conn);
 }
 
@@ -170,7 +188,7 @@ function divisionRequest()
 {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT R.reservation_id FROM reservations R WHERE NOT EXISTS ((SELECT RC.room_number FROM roomContains RC WHERE RC.floor = 3) minus (SELECT Res.reserves_number FROM reserves Res WHERE R.reservation_id = Res.reservation_id))");
+    $result = executePlainSQL("SELECT R.reservation_id FROM reservations R WHERE NOT EXISTS ((SELECT RC.room_number FROM roomContains RC WHERE RC.floor = 3) minus (SELECT Res.room_number FROM reserves Res WHERE R.reservation_id = Res.reservation_id))");
 
     printResult($result);
     OCICommit($db_conn);
@@ -183,7 +201,13 @@ function viewReservationsRequest()
 
     $result = executePlainSQL("SELECT * FROM reservations");
 
-    printResult($result);
+    $columns = array (
+        "Reservation ID",
+        "Start Date",
+        "End Date"  
+    );
+
+    printResult($result, $columns, "Reservations");
 
     // echo $result;
     OCICommit($db_conn);
@@ -255,11 +279,16 @@ function executeBoundSQL($cmdstr, $list)
 
 
 
-function printResult($result)
+function printResult($result, $columns, $name)
 { //prints results from a select statement
-    echo "<h3>Retrieved data from table Reservation:<h3>";
+    echo "<h3>Retrieved data from table " . $name . ":<h3>";
     echo "<table>";
-    echo "<tr><th>start date</th><th>end date</th><th>reservation id</th></tr>";
+
+    echo "<tr>";
+    foreach ($columns as $column) {
+        echo "<th>" . $column . "</th>";
+    }
+    echo "</tr>";
 
     while ($row = OCI_fetch_array($result, OCI_BOTH)) {
         echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td></tr>"; //or just use "echo $row[0]"

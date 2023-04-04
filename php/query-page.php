@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 <body>
-
+    <div>
     <h1> Query Page </h1>
 
     <form method="POST" action="cpsc304-project.php">
@@ -76,7 +76,7 @@
 
     ?>
 
-
+</div>
 </body>
 
 </html>

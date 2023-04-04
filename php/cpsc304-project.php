@@ -138,7 +138,7 @@
             } else if (array_key_exists('viewReservations', $_GET)) {
                 viewReservationsRequest();
             } else if (isset($_GET['resetTablesRequest'])) {
-                resetReservationsRequest();
+                // resetReservationsRequest();
              } else if (isset($_GET['projectQueryRequest'])) {
                 projectTableRequest();
              }
