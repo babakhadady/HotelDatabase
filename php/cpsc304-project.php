@@ -106,7 +106,7 @@
                 if ($aDoor == "Reservations") {
                     echo ' <p class="attribute"> Reservation ID <input type="checkbox" name="attrReservationsID" value="Yes" /> </p>';
                     echo ' <p class="attribute"> Start Date <input type="checkbox" name="attrStartDate" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> End Date <input type="checkbox" name="attrDndDate" value="Yes" /> </p>';
+                    echo ' <p class="attribute"> End Date <input type="checkbox" name="attrEndDate" value="Yes" /> </p>';
                 } else if ($aDoor == "Reserves") {
                     echo ' <p class="attribute"> Reservation ID <input type="checkbox" name="attrReservationsID" value="Yes" /> </p>';
                     echo ' <p class="attribute"> Room Number <input type="checkbox" name="attrRoomNumber" value="Yes" /> </p>';
@@ -128,7 +128,9 @@
 
     <?php
 
+
     require_once('db-requests.php');
+
 
     function handleRequest()
     {
