@@ -16,8 +16,10 @@ function debugAlertMessage($message)
     }
 }
 
-function updateQueryRequest() {
+function updateQueryRequest()
+{
     global $db_conn;
+    global $success;
 
     $array = array();
     $columns = array();
@@ -41,10 +43,9 @@ function updateQueryRequest() {
         array_push($columns, "End Date");
         $count++;
     }
-    
+
     $newVal = $_POST['newVal'];
     $queryString = "UPDATE reservations SET ";
-
 
     $selectTable = $_POST['selectTable'];
 
@@ -75,12 +76,19 @@ function updateQueryRequest() {
     executePlainSQL($queryString);
     OCICommit($db_conn);
 
+    if ($success == False) {
+        return;
+    }
+
+    printSuccess("Successful Update Operation");
+
 }
 
 
 function selectAttributeQueryRequest()
 {
     global $db_conn;
+    global $success;
     $value = $_GET['whereBody'];
     $column = $_GET['selectTable'];
 
@@ -108,16 +116,25 @@ function selectAttributeQueryRequest()
     array_push($arr, "Start Date");
     array_push($arr, "End Date");
 
-    printResult($result, $arr, 'Reservation');
     OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
+
+    printResult($result, $arr, 'Reservation');
+    printSuccess("Successful Selection Operation");
 
 }
 
 
 function projectTableRequest()
 {
-    $val = $_GET['projectQueryRequest'];
+
     global $db_conn;
+    global $success;
+
+    $val = $_GET['projectQueryRequest'];
     $array = array();
     $columns = array();
 
@@ -206,15 +223,22 @@ function projectTableRequest()
 
     $result = executePlainSQL($queryString);
 
-    printResult($result, $columns, $_GET['projectQueryRequest']);
     OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
+
+    printResult($result, $columns, $_GET['projectQueryRequest']);
+    printSuccess("Successful Projection Operation");
+
 }
 
 function insertQueryRequest($id, $start, $end, $rn)
 {
 
-    echo "running";
     global $db_conn;
+    global $success;
 
     $reservationstuple = array(
         ":bind1" => $start,
@@ -236,21 +260,39 @@ function insertQueryRequest($id, $start, $end, $rn)
     );
 
     executeBoundSQL("insert into reservations values (:bind1, :bind2, :bind3)", $reservationstuples);
+
+    if ($success == false) {
+        return;
+    }
     executeBoundSQL("insert into reserves values (:bind1, :bind2)", $reservestuples);
+
+    if ($success == false) {
+        return;
+    }
+    
     updateRoomStatusToOccupied($rn);
+    printSuccess("Successful Insert Operation");
     OCICommit($db_conn);
 }
 
 function updateRoomStatusToOccupied($rn)
 {
     global $db_conn;
+    global $success;
     executePlainSQL("UPDATE roomContains SET status = 'occupied' WHERE room_number = '" . $rn . "'");
+
+    if ($success == False) {
+        return;
+    }
+
     OCICommit($db_conn);
+
 }
 
 function deleteQueryRequest()
 {
     global $db_conn;
+    global $success;
 
 
     $array = array();
@@ -288,30 +330,42 @@ function deleteQueryRequest()
 
     executePlainSQL($queryString);
 
+    if ($success == False) {
+        return;
+    }
+
     OCICommit($db_conn);
+    printSuccess("Successful Delete Operation");
+
 }
 
 function aggregationGroupByRequest($roomStatus)
 {
     global $db_conn;
+    global $success;
 
     $result = executePlainSQL("SELECT RC.room_type, COUNT(*) FROM roomContains RC WHERE RC.status = '" . $roomStatus . "' GROUP BY RC.room_type");
-
-    echo $result;
 
     $columns = array(
         "Room Type",
         "Count"
     );
 
+    OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
 
     printResult($result, $columns, "Room");
-    OCICommit($db_conn);
+    printSuccess("Successful Operation");
+
 }
 
 function aggregationHavingRequest($number)
 {
     global $db_conn;
+    global $success;
 
     $result = executePlainSQL("SELECT RC.floor, MIN(RC.price) FROM roomContains RC WHERE RC.status = 'vacant' GROUP BY RC.floor HAVING COUNT(*) > '" . $number . "'");
 
@@ -321,15 +375,22 @@ function aggregationHavingRequest($number)
         "Min Price"
     );
 
-    printResult($result, $columns, "Room");
     OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
+
+    printResult($result, $columns, "Room");
+    printSuccess("Successful Operation");
+
 }
 
 function aggregationNestedRequest($price)
 {
     global $db_conn;
+    global $success;
 
-    $result;
     if ($price == "cheapest") {
         $result = executePlainSQL("SELECT RC.room_number FROM roomContains RC WHERE RC.status = 'vacant' AND RC.price <= all (SELECT MIN(RC2.price) FROM roomContains RC2 WHERE RC2.status = 'vacant' GROUP BY RC2.floor)");
     } else {
@@ -340,25 +401,41 @@ function aggregationNestedRequest($price)
         "Number",
     );
 
-    printResult($result, $columns, "Room");
-
     OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
+
+    printResult($result, $columns, "Room");
+    printSuccess("Successful Operation");
+
 }
 
 function divisionRequest($floor)
 {
     global $db_conn;
+    global $success;
 
     $result = executePlainSQL("SELECT R.reservation_id FROM reservations R WHERE NOT EXISTS ((SELECT RC.room_number FROM roomContains RC WHERE RC.floor = '" . $floor . "') minus (SELECT Res.room_number FROM reserves Res WHERE R.reservation_id = Res.reservation_id))");
 
-    printResult($result);
     OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
+
+
+    printResult($result, array("Reservation ID"), "Reservations");
+    printSuccess("Successful Division Operation");
+
 }
 
 
 function viewReservationsRequest()
 {
     global $db_conn;
+    global $success;
 
     $result = executePlainSQL("SELECT reservation_id, start_date, end_date FROM reservations");
 
@@ -368,33 +445,41 @@ function viewReservationsRequest()
         "End Date"
     );
 
-    printResult($result, $columns, "Reservations");
-
-    // echo $result;
     OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
+
+    printResult($result, $columns, "Reservations");
+    printSuccess("Successful View Operation");
 }
 
 
 function executePlainSQL($cmdstr)
 { //takes a plain (no bound variables) SQL command and executes it
     //echo "<br>running ".$cmdstr."<br>";
-    global $db_conn, $success;
+    global $db_conn, $success, $err;
 
     $statement = OCIParse($db_conn, $cmdstr);
     //There are a set of comments at the end of the file that describe some of the OCI specific functions and how they work
 
     if (!$statement) {
-        echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
         $e = OCI_Error($db_conn); // For OCIParse errors pass the connection handle
-        echo htmlentities($e['message']);
+        printError(array(
+            "<p> Failed to execute requested operation: </p>",
+            htmlentities($e['message'])
+        ));
         $success = False;
     }
 
     $r = OCIExecute($statement, OCI_DEFAULT);
     if (!$r) {
-        echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
         $e = oci_error($statement); // For OCIExecute errors pass the statementhandle
-        echo htmlentities($e['message']);
+        printError(array(
+            "<p> Failed to execute requested operation: </p>",
+            htmlentities($e['message'])
+        ));
         $success = False;
     }
 
@@ -407,15 +492,19 @@ function executePlainSQL($cmdstr)
 
 function executeBoundSQL($cmdstr, $list)
 {
-    global $db_conn, $success;
+    global $db_conn, $success, $err;
     $statement = OCIParse($db_conn, $cmdstr);
 
     // echo "TEST";
 
     if (!$statement) {
-        echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
         $e = OCI_Error($db_conn);
-        echo htmlentities($e['message']);
+
+        printError(array(
+            "<p> Failed to execute requested operation: </p>",
+            htmlentities($e['message']),
+        ));
+
         $success = False;
     }
 
@@ -429,10 +518,12 @@ function executeBoundSQL($cmdstr, $list)
 
         $r = OCIExecute($statement, OCI_DEFAULT);
         if (!$r) {
-            echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
             $e = OCI_Error($statement); // For OCIExecute errors, pass the statementhandle
-            echo htmlentities($e['message']);
-            echo "<br>";
+            printError(array(
+                "<p> Failed to execute requested operation: </p>",
+                htmlentities($e['message'])
+            ));
+
             $success = False;
         }
     }
@@ -441,8 +532,10 @@ function executeBoundSQL($cmdstr, $list)
 
 
 function printResult($result, $columns, $name)
-{ //prints results from a select statement
-    echo "<h3>Retrieved data from table " . $name . ":<h3>";
+{
+
+    
+    echo "<div class=''><h3>Retrieved data from table " . $name . ":</h3>";
     echo "<table>";
 
     echo "<tr>";
@@ -455,13 +548,11 @@ function printResult($result, $columns, $name)
         echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" . $row[5] . "</td></tr>"; //or just use "echo $row[0]"
     }
 
-    echo "</table>";
+    echo "</table> </div>";
 }
 
 function connectToDB()
 {
-    // echo "test";
-
     global $db_conn;
 
     // Your username is ora_(CWL_ID) and the password is a(student number). For example,

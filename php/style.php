@@ -5,6 +5,7 @@ header("Content-type: text/css");
 $font_family = 'Arial, Helvetica, sans-serif';
 $font_size = '0.7em';
 $border = '1px solid';
+
 ?>
 
 table, td, th {
@@ -14,34 +15,50 @@ margin-left: auto;
 margin-right: auto;
 }
 
+table {
+  margin-bottom: 20px;
+}
+
+
+.body-container {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+
 tr, th {
-  border: 1px solid #ddd;
+border: 1px solid #ddd;
+
 }
 
 tr:nth-child(even){background-color: #f2f2f2;}
 
 tr {
-    text-align: center;
+text-align: center;
 }
 tr:hover {background-color: #ddd;}
 
 th {
-  padding-left: 12px;
-  background-color: #ddd;
-  font-size: 20px;
-  margin: 12px;
+background-color: #ddd;
+font-size: 20px;
 
+}
+
+.page {
+background-color: #FFFFFF;
+margin: 20px;
+display: flex;
+align-items: center;
+flex-direction: column;
+padding-left: 40px;
+padding-right: 40px;
+border-radius: 15px;
+padding-top: 20px;
 }
 
 
 div {
-  display: flex;
-flex-direction: column;
-align-items: center;
-width: 50%;
-margin-left: auto;
-margin-right: auto;
-
 
 }
 
@@ -49,8 +66,8 @@ body {
 display: flex;
 flex-direction: column;
 align-items: center;
-border-color: #000;
-border-style: solid;
+background-color: #3a3839 !important;
+border-radius: 5px;
 }
 
 * {
@@ -61,10 +78,13 @@ hr {
 }
 
 .formfield {
-margin-top: 0px;
-margin-bottom: 0px;
+
 }
 
+br {
+    line-height: 10px;
+ }
+ 
 form {
 display:flex;
 align-items: center;
@@ -72,21 +92,66 @@ flex-direction: column;
 }
 
 h1 {
+  padding-top: 10px;
 text-align: center;
+color: #FFFFFF !important;
 }
 
 h2 {
 margin-bottom: 10px;
+padding-left: 20px;
+padding-right: 20px;
+
 }
 
-h3 { 
+h3 {
 margin-bottom: 10px;
+padding-top: 20px;
+
+padding-left: 20px;
+padding-right: 20px;
+
 }
 
-strong {
-font-size: 20px;
-}
+
+
+
 .attribute {
 margin-top: 2.5px;
 margin-bottom: 2.5px;
+}
+
+.text-success, .text-danger {
+font-size: 20px;
+}
+
+.results {
+background-color: #FFFFFF;
+display: flex;
+flex-direction: column;
+align-items: center;
+border-radius: 15px;
+padding-top: 20px;
+}
+
+a {
+  text-decoration: none;
+  
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.roworder {
+  display: flex;
+  flex-direction: row;
+}
+
+select {
+  margin-right: 10px;
+}
+
+input[type="text"] {
+    height: 30px;
 }

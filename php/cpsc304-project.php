@@ -22,7 +22,8 @@
 
 <html>
 <link rel="stylesheet" href="style.php" media="screen">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+
 
 
 <head>
@@ -30,134 +31,152 @@
 </head>
 
 <body>
-    <h1> Hotel Management Application</h1>
-
-    <hr />
-
-    <!-- <h2>Reset Application</h2>
-    <form method="GET" action="cpsc304-project.php">
-        <input type="submit" value="Reset" name="resetTablesRequest">
-    </form> -->
+    <h1 class=""> Hotel Management Application</h1>
 
 
-    <h2> Update DataBase Page </h2>
-    <form method="POST" action="update-page.php">
-        <input type="submit" value="Query">
-    </form>
-
-    <h2> Query Page </h2>
-    <form method="POST" action="query-page.php">
-        <input type="submit" value="Query">
-    </form>
 
 
-    <h2>View All Reservations </h2>
-    <form method="GET"> <!--refresh page when submitted-->
-        <input type="submit" name="viewReservations"></p>
-    </form>
 
-    <!-- unnecessary ? -->
-    <!-- <h2>Select Reservations by End Date</h2>
-    <form method="GET" action="cpsc304-project.php"> 
-        <input type="hidden" id="selectQueryRequest" name="selectQueryRequest">
-        <p class="formfield">
-            End Date: <input type="text" name="selend"> <br /><br />
-        </p>
-        <input type="submit" id="selectQueryRequest" name="selectQueryRequest">
-    </form> -->
 
-    <h2>Select Certain Tuples From Reservation</h2>
-    <form method="GET"  action="cpsc304-project.php"> <!--refresh page when submitted-->
-    <input type="hidden" name="selectAttributeQueryRequest" />
-            Select a Column:
-            <select name="selectTable">
-                <?php
-                $tables = array("Reservation ID", "Start Date", "End Date");
-                foreach ($tables as $table) {
-                    echo '<option value="' . $table . '"' . '>' . $table . '</option>';
-                }
-                ?>
-            </select>
-            <p class="formfield">
-            Value: <input type="text" name="whereBody"> <br /><br />
-            </p>
-            <input type="submit">
-    </form>
 
-    <h2>Select a Table and Attributes to View</h2>
-    <form method="GET">
-        <p class="formfield">
-            Select a Table:
-            <select name="projectTable">
-                <?php
-                $tables = array("Reservations", "Reserves", "Room");
-                foreach ($tables as $table) {
-                    echo '<option value="' . $table . '"' . (($_GET['projectTable'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
-                }
-                ?>
-            </select>
-            <input type="submit">
-        </p>
-    </form>
-    <form method="GET">
-        <p class="formfield">
 
+
+    <div class="body-container">
+
+        <hr />
+
+        <div class="page">
+            <h2> Update Page </h2>
+            <form method="POST" action="update-page.php">
+                <input type="submit" class='btn btn-sm btn-dark' alue="Query">
+            </form>
+
+            <h2> Query Page </h2>
+            <form method="POST" action="query-page.php">
+                <input type="submit" class='btn btn-sm btn-dark' value="Query">
+            </form>
+
+
+            <h2>View All Reservations </h2>
+            <form method="GET"> <!--refresh page when submitted-->
+                <input type="submit" class='btn btn-sm btn-primary' name="viewReservations"></p>
+            </form>
+
+            <h2>Select Certain Tuples From Reservation</h2>
+            <form method="GET" action="cpsc304-project.php"> <!--refresh page when submitted-->
+                <input type="hidden" name="selectAttributeQueryRequest" />
+                Select a Column
+                <select name="selectTable" class="btn btn-sm btn-secondary">
+
+
+                    <?php
+                    $tables = array("Reservation ID", "Start Date", "End Date");
+                    foreach ($tables as $table) {
+                        echo '<option value="' . $table . '"' . '>' . $table . '</option>';
+                    }
+                    ?>
+                </select>
+                <br />
+
+                <p class="formfield">
+                    <label for="whereBody" class="form-label"> Value </label>
+                    <input class="form-control" type="text" name="whereBody">
+                </p>
+                <input type="submit" class='btn btn-sm btn-primary'>
+            </form>
+
+            <h2>Select a Table and Attributes to View</h2>
+            <form method="GET">
+                <p class="formfield">
+                    Select a Table:
+                    <select name="projectTable" class="btn btn-sm btn-secondary">
+                        <?php
+                        $tables = array("Reservations", "Reserves", "Room");
+                        foreach ($tables as $table) {
+                            echo '<option value="' . $table . '"' . (($_GET['projectTable'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <input type="submit" class="btn-sm btn btn-primary">
+
+
+                </p>
+            </form>
+            <form method="GET">
+                <div class="">
+
+                    <?php
+                    if (isset($_GET['projectTable'])) {
+
+                        $aDoor = $_GET['projectTable'];
+                        echo '<input type="hidden" id="projectQueryRequest" name="projectQueryRequest" value="' . $aDoor . '">';
+                        echo '<strong> Select Attributes </strong>';
+                        if ($aDoor == "Reservations") {
+                            echo ' <p class="attribute"> Reservation ID <input type="checkbox" name="attrReservationsID" value="Yes" /> </p>';
+                            echo ' <p class="attribute"> Start Date <input type="checkbox" name="attrStartDate" value="Yes" /> </p>';
+                            echo ' <p class="attribute"> End Date <input type="checkbox" name="attrEndDate" value="Yes" /> </p>';
+                        } else if ($aDoor == "Reserves") {
+                            echo ' <p class="attribute"> Reservation ID <input type="checkbox" name="attrReservationsID" value="Yes" /> </p>';
+                            echo ' <p class="attribute"> Room Number <input type="checkbox" name="attrRoomNumber" value="Yes" /> </p>';
+                        } else {
+                            echo ' <p class="attribute"> Number <input type="checkbox" name="attrRoomNumber" value="Yes" /> </p>';
+                            echo ' <p class="attribute"> Type <input type="checkbox" name="attrRoomType" value="Yes" /> </p>';
+                            echo ' <p class="attribute"> Floor <input type="checkbox" name="attrRoomFloor" value="Yes" /> </p>';
+                            echo ' <p class="attribute"> Status <input type="checkbox" name="attrRoomStatus" value="Yes" /> </p>';
+                            echo ' <p class="attribute"> Price <input type="checkbox" name="attrRoomPrice" value="Yes" /> </p>';
+                        }
+                        echo '<br />';
+                        echo ' <input type="submit"  class="btn-sm btn btn-primary"> ';
+                    }
+                    ?>
+
+
+                </div> <br />
+            </form>
+
+        </div>
+
+
+        <div class="results">
             <?php
-            if (isset($_GET['projectTable'])) {
 
-                $aDoor = $_GET['projectTable'];
-                echo '<input type="hidden" id="projectQueryRequest" name="projectQueryRequest" value="' . $aDoor . '">';
-                echo '<strong> Select Attributes </strong>';
-                echo '<br />';
-                if ($aDoor == "Reservations") {
-                    echo ' <p class="attribute"> Reservation ID <input type="checkbox" name="attrReservationsID" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> Start Date <input type="checkbox" name="attrStartDate" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> End Date <input type="checkbox" name="attrEndDate" value="Yes" /> </p>';
-                } else if ($aDoor == "Reserves") {
-                    echo ' <p class="attribute"> Reservation ID <input type="checkbox" name="attrReservationsID" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> Room Number <input type="checkbox" name="attrRoomNumber" value="Yes" /> </p>';
-                } else {
-                    echo ' <p class="attribute"> Number <input type="checkbox" name="attrRoomNumber" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> Type <input type="checkbox" name="attrRoomType" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> Floor <input type="checkbox" name="attrRoomFloor" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> Status <input type="checkbox" name="attrRoomStatus" value="Yes" /> </p>';
-                    echo ' <p class="attribute"> Price <input type="checkbox" name="attrRoomPrice" value="Yes" /> </p>';
+
+            require_once('db-requests.php');
+
+            function printError($err)
+            {
+                foreach ($err as $msg) {
+                    echo "<div class='text-danger'>" . $msg . "</div>";
                 }
-                echo '<br />';
-                echo ' <input type="submit" > ';
             }
+
+            function printSuccess($msg)
+            {
+                echo "<div class='text-success'>" . $msg . "</div>";
+            }
+
+            function handleRequest()
+            {
+                if (connectToDB()) {
+                    if (array_key_exists('selectAttributeQueryRequest', $_GET)) {
+                        selectAttributeQueryRequest();
+                    } else if (array_key_exists('viewReservations', $_GET)) {
+                        viewReservationsRequest();
+                    } else if (isset($_GET['resetTablesRequest'])) {
+                        // resetReservationsRequest();
+                    } else if (isset($_GET['projectQueryRequest'])) {
+                        projectTableRequest();
+                    }
+                    disconnectFromDB();
+                }
+            }
+
+
+
+            handleRequest();
             ?>
-
-
-        </p> <br />
-    </form>
-
-    <?php
-
-
-    require_once('db-requests.php');
-
-
-    function handleRequest()
-    {
-        if (connectToDB()) {
-            if (array_key_exists('selectAttributeQueryRequest', $_GET)) {
-                selectAttributeQueryRequest();
-            } else if (array_key_exists('viewReservations', $_GET)) {
-                viewReservationsRequest();
-            } else if (isset($_GET['resetTablesRequest'])) {
-                // resetReservationsRequest();
-             } else if (isset($_GET['projectQueryRequest'])) {
-                projectTableRequest();
-             }
-            disconnectFromDB();
-        }
-    }
-
-    handleRequest();
-
-
-    ?>
+        </div>
+    </div>
 </body>
 
 </html>
