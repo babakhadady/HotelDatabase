@@ -238,31 +238,31 @@ insert into roomContains values
 (200, 2, 'single', 'vacant', 150);
 
 insert into roomContains values
-(201, 2, 'queen', 'vacant', 150);
+(201, 2, 'queen', 'vacant', 250);
 
 insert into roomContains values
 (202, 2, 'double', 'vacant', 200);
 
 insert into roomContains values
-(401, 4, 'single', 'vacant', 200);
+(401, 4, 'single', 'vacant', 150);
 
 insert into roomContains values
 (501, 5, 'double', 'vacant', 200);
 
 insert into roomContains values
-(600, 6, 'queen', 'vacant', 200);
+(600, 6, 'queen', 'vacant', 250);
 
 insert into roomContains values
 (601, 6, 'double', 'vacant', 200);
 
 insert into roomContains values
-(602, 6, 'king', 'vacant', 200);
+(602, 6, 'king', 'vacant', 300);
 
 insert into roomContains values
 (701, 7, 'double', 'vacant', 200);
 
 insert into roomContains values
-(801, 8, 'master', 'vacant', 200);
+(801, 8, 'master', 'vacant', 350);
 
 INSERT
 INTO reserves(reservation_id, room_number)
