@@ -237,14 +237,14 @@ function insertQueryRequest($id, $start, $end, $rn)
 
     executeBoundSQL("insert into reservations values (:bind1, :bind2, :bind3)", $reservationstuples);
     executeBoundSQL("insert into reserves values (:bind1, :bind2)", $reservestuples);
-    // updateRoomStatusToOccupied($rn);
+    updateRoomStatusToOccupied($rn);
     OCICommit($db_conn);
 }
 
 function updateRoomStatusToOccupied($rn)
 {
     global $db_conn;
-    executePlainSQL("UPDATE reserves SET status = occupied WHERE status ='" . $rn . "'");
+    executePlainSQL("UPDATE roomContains SET status = 'occupied' WHERE room_number = '" . $rn . "'");
     OCICommit($db_conn);
 }
 
@@ -325,15 +325,19 @@ function aggregationHavingRequest($number)
     OCICommit($db_conn);
 }
 
-function aggregationNestedRequest()
+function aggregationNestedRequest($price)
 {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT RC.room_number FROM roomContains RC WHERE RC.status = 'vacant' AND RC.price >= all (SELECT MAX(RC2.price) FROM roomContains RC2 WHERE RC2.status = 'vacant' GROUP BY RC2.floor)");
+    $result;
+    if ($price == "cheapest") {
+        $result = executePlainSQL("SELECT RC.room_number FROM roomContains RC WHERE RC.status = 'vacant' AND RC.price <= all (SELECT MIN(RC2.price) FROM roomContains RC2 WHERE RC2.status = 'vacant' GROUP BY RC2.floor)");
+    } else {
+        $result = executePlainSQL("SELECT RC.room_number FROM roomContains RC WHERE RC.status = 'vacant' AND RC.price >= all (SELECT MAX(RC2.price) FROM roomContains RC2 WHERE RC2.status = 'vacant' GROUP BY RC2.floor)");
+    }
 
     $columns = array(
         "Number",
-
     );
 
     printResult($result, $columns, "Room");
@@ -341,11 +345,11 @@ function aggregationNestedRequest()
     OCICommit($db_conn);
 }
 
-function divisionRequest()
+function divisionRequest($floor)
 {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT R.reservation_id FROM reservations R WHERE NOT EXISTS ((SELECT RC.room_number FROM roomContains RC WHERE RC.floor = 3) minus (SELECT Res.room_number FROM reserves Res WHERE R.reservation_id = Res.reservation_id))");
+    $result = executePlainSQL("SELECT R.reservation_id FROM reservations R WHERE NOT EXISTS ((SELECT RC.room_number FROM roomContains RC WHERE RC.floor = '" . $floor . "') minus (SELECT Res.room_number FROM reserves Res WHERE R.reservation_id = Res.reservation_id))");
 
     printResult($result);
     OCICommit($db_conn);
