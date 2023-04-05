@@ -46,14 +46,14 @@
         <hr />
 
         <div class="page">
-            <h2> Update Page </h2>
+            <h2> Manage Reservations </h2>
             <form method="POST" action="update-page.php">
-                <input type="submit" class='btn btn-sm btn-dark' alue="Query">
+                <input type="submit" class='btn btn-sm btn-dark' value="Go to Managagement Page">
             </form>
 
-            <h2> Query Page </h2>
+            <h2> Find Specific Rooms/Reservations</h2>
             <form method="POST" action="query-page.php">
-                <input type="submit" class='btn btn-sm btn-dark' value="Query">
+                <input type="submit" class='btn btn-sm btn-dark' value="Go to Query Page">
             </form>
 
 
@@ -62,7 +62,7 @@
                 <input type="submit" class='btn btn-sm btn-primary' name="viewReservations"></p>
             </form>
 
-            <h2>Select Certain Tuples From Reservation</h2>
+            <h2>Find Certain Reservations</h2>
             <form method="GET" action="cpsc304-project.php"> <!--refresh page when submitted-->
                 <input type="hidden" name="selectAttributeQueryRequest" />
                 Select a Column
