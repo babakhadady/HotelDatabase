@@ -268,7 +268,15 @@ VALUES (101235, 501);
 
 INSERT
 INTO reserves(reservation_id, room_number)
+VALUES (101236, 600);
+
+INSERT
+INTO reserves(reservation_id, room_number)
 VALUES (101236, 601);
+
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101236, 602);
 
 INSERT
 INTO reserves(reservation_id, room_number)
