@@ -42,6 +42,8 @@ tr:hover {background-color: #ddd;}
 th {
 background-color: #ddd;
 font-size: 20px;
+padding-left: 10px;
+padding-right: 10px;
 
 }
 
@@ -123,6 +125,7 @@ margin-bottom: 2.5px;
 
 .text-success, .text-danger {
 font-size: 20px;
+padding: 20px;
 }
 
 .results {

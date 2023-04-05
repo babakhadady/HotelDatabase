@@ -81,7 +81,6 @@ function updateQueryRequest()
     }
 
     printSuccess("Successful Update Operation");
-
 }
 
 
@@ -106,7 +105,7 @@ function selectAttributeQueryRequest()
         $column = "reservation_id";
     }
 
-    $query = "select * from reservations where " . $column . " = '" . $value . "'";
+    $query = "select reservation_id, start_date, end_date from reservations where " . $column . " = '" . $value . "'";
 
     $result = executePlainSQL($query);
 
@@ -124,7 +123,6 @@ function selectAttributeQueryRequest()
 
     printResult($result, $arr, 'Reservation');
     printSuccess("Successful Selection Operation");
-
 }
 
 
@@ -231,7 +229,6 @@ function projectTableRequest()
 
     printResult($result, $columns, $_GET['projectQueryRequest']);
     printSuccess("Successful Projection Operation");
-
 }
 
 function insertQueryRequest($id, $start, $end, $rn)
@@ -269,7 +266,7 @@ function insertQueryRequest($id, $start, $end, $rn)
     if ($success == false) {
         return;
     }
-    
+
     updateRoomStatusToOccupied($rn);
     printSuccess("Successful Insert Operation");
     OCICommit($db_conn);
@@ -286,7 +283,6 @@ function updateRoomStatusToOccupied($rn)
     }
 
     OCICommit($db_conn);
-
 }
 
 function deleteQueryRequest()
@@ -336,7 +332,6 @@ function deleteQueryRequest()
 
     OCICommit($db_conn);
     printSuccess("Successful Delete Operation");
-
 }
 
 function aggregationGroupByRequest($roomStatus)
@@ -359,7 +354,6 @@ function aggregationGroupByRequest($roomStatus)
 
     printResult($result, $columns, "Room");
     printSuccess("Successful Operation");
-
 }
 
 function aggregationHavingRequest($number)
@@ -383,7 +377,6 @@ function aggregationHavingRequest($number)
 
     printResult($result, $columns, "Room");
     printSuccess("Successful Operation");
-
 }
 
 function aggregationNestedRequest($price)
@@ -409,7 +402,6 @@ function aggregationNestedRequest($price)
 
     printResult($result, $columns, "Room");
     printSuccess("Successful Operation");
-
 }
 
 function divisionRequest($floor)
@@ -428,7 +420,6 @@ function divisionRequest($floor)
 
     printResult($result, array("Reservation ID"), "Reservations");
     printSuccess("Successful Division Operation");
-
 }
 
 
@@ -534,18 +525,25 @@ function executeBoundSQL($cmdstr, $list)
 function printResult($result, $columns, $name)
 {
 
-    
+
     echo "<div class=''><h3>Retrieved data from table " . $name . ":</h3>";
     echo "<table>";
 
-    echo "<tr>";
     foreach ($columns as $column) {
         echo "<th>" . $column . "</th>";
     }
-    echo "</tr>";
 
     while ($row = OCI_fetch_array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" . $row[5] . "</td></tr>"; //or just use "echo $row[0]"
+
+        echo "<tr>";
+        for ($i = 0; $i < sizeof($row); $i++) {
+            if ($row[$i] != "") {
+                echo "<td>" . $row[$i] . "</td>";
+
+            }
+        }
+        
+        echo "</tr>";
     }
 
     echo "</table> </div>";
