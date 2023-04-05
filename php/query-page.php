@@ -75,7 +75,7 @@
               <p class="formfield">
                 <select name="floor-table" class="btn btn-secondary btn-sm">
                     <?php
-                    $tables = array("2", "3", "4", "5");
+                    $tables = array("2", "3", "4", "5", "6", "7", "8");
                     foreach ($tables as $table) {
                         echo '<option value="' . $table . '"' . (($_GET['floor-table'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
                     }

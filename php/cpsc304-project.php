@@ -98,8 +98,6 @@
                         ?>
                     </select>
                     <input type="submit" class="btn-sm btn btn-primary">
-
-
                 </p>
             </form>
             <form method="GET">
@@ -134,6 +132,27 @@
                 </div> <br />
             </form>
 
+            <h2>Join Reservations and Room on a Specific Condition</h2>
+            <form method="GET" action="cpsc304-project.php"> <!--refresh page when submitted-->
+                <input type="hidden" name="joinRequest" />
+                Select a Column
+                <select name="joinTable" class="btn btn-sm btn-secondary">
+                    <?php
+                    $tables = array("Reservation ID", "Start Date", "End Date", "Number", "Floor", "Type", "Status", "Price");
+                    foreach ($tables as $table) {
+                        echo '<option value="' . $table . '"' . '>' . $table . '</option>';
+                    }
+                    ?>
+                </select>
+                <br />
+
+                <p class="formfield">
+                    Value
+                    <input class="form-control" type="text" name="joinValue">
+                </p>
+                <input type="submit" class='btn btn-sm btn-primary'>
+            </form>
+
         </div>
 
 
@@ -166,6 +185,8 @@
                         // resetReservationsRequest();
                     } else if (isset($_GET['projectQueryRequest'])) {
                         projectTableRequest();
+                    } else if (isset($_GET['joinRequest'])) {
+                        joinTableRequest();
                     }
                     disconnectFromDB();
                 }
