@@ -382,20 +382,20 @@ INSERT
 INTO TransactionMadeTo1(hours_worked, amount, wage)
 VALUES (5, 14, 19);
 
--- INSERT
--- INTO TransactionMadeTo2 VALUES (1234, 'February 20, 2002', 'Room Payment', 'October, 10, 2002 - February, 10, 2002', 1234, 1, 15);
+INSERT
+INTO TransactionMadeTo2 VALUES (1234, 'February 20, 2002', 'Room Payment', 'October, 10, 2002 - February, 10, 2002', 1234, 1, 10);
 
--- INSERT
--- INTO TransactionMadeTo2 VALUES (123456, 'February 21, 2002', 'Room Payment', 'October, 10, 2002 - February, 10, 2002', 3243, 2, 16);
+INSERT
+INTO TransactionMadeTo2 VALUES (123456, 'February 21, 2002', 'Room Payment', 'October, 10, 2002 - February, 10, 2002', 3243, 2, 11);
 
--- INSERT
--- INTO TransactionMadeTo2 VALUES (123457,  'February 22, 2002', 'Cancellation Fee', 'October, 10, 2002 - February, 10, 2002', 3243, 3, 17);
+INSERT
+INTO TransactionMadeTo2 VALUES (123457,  'February 22, 2002', 'Cancellation Fee', 'October, 10, 2002 - February, 10, 2002', 3243, 3, 12);
 
--- INSERT
--- INTO TransactionMadeTo2 VALUES (123458,  'February 23, 2002', 'Cancellation Fee',  'October, 10, 2002 - February, 10, 2002', 1234, 4, 18);
+INSERT
+INTO TransactionMadeTo2 VALUES (123458,  'February 23, 2002', 'Cancellation Fee',  'October, 10, 2002 - February, 10, 2002', 1234, 4, 13);
 
--- INSERT
--- INTO TransactionMadeTo2 VALUES (123459,  'February 24, 2002', 'Cancellation Fee',  'October, 10, 2002 - February, 10, 2002', 3243, 5, 19);
+INSERT
+INTO TransactionMadeTo2 VALUES (123459,  'February 24, 2002', 'Cancellation Fee',  'October, 10, 2002 - February, 10, 2002', 3243, 5, 14);
 
 INSERT
 INTO Creates VALUES (123456, 101234);
@@ -472,20 +472,20 @@ INTO Keeps VALUES (45217893, 123458);
 INSERT
 INTO Keeps VALUES (99875757, 123459);
 
--- INSERT
--- INTO Receives VALUES(123455, 123455);
+INSERT
+INTO Receives VALUES(123456, 123455);
 
--- INSERT
--- INTO Receives VALUES(123456, 123456);
+INSERT
+INTO Receives VALUES(123456, 123456);
 
--- INSERT
--- INTO Receives VALUES(123457, 123457);
+INSERT
+INTO Receives VALUES(123457, 123457);
 
--- INSERT
--- INTO Receives VALUES(123458, 123458);
+INSERT
+INTO Receives VALUES(123458, 123458);
 
--- INSERT
--- INTO Receives VALUES(123459, 123459);
+INSERT
+INTO Receives VALUES(123459, 123459);
 
 INSERT
 INTO Checks_in1 VALUES ('October 5, 2021', 123455);
