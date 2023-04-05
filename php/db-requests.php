@@ -447,6 +447,67 @@ function viewReservationsRequest()
 }
 
 
+function joinTableRequest() {
+    global $db_conn;
+    global $success;
+    $column = $_GET['joinTable'];
+    $value = $_GET['joinValue'];
+
+    if (empty($value)) {
+        return;
+    }
+
+    if ($column == "Start Date") {
+        $column = "start_date";
+    }
+    if ($column == "End Date") {
+        $column = "end_date";
+    }
+    if ($column == "Reservation ID") {
+        $column = "reservation_id";
+    }
+
+    if ($column == "Number") {
+        $column = "room_number";
+    }
+
+    if ($column == "Floor") {
+        $column = "floor";
+    }
+
+    if ($column == "Type") {
+        $column = "room_type";
+    }
+
+    if ($column == "Status") {
+        $column = "status";
+    }
+
+    if ($column == "Price") {
+        $column = "price";
+    }
+
+
+    $query = "select reservation_id, room_number from reservations, roomContains where " . $column . " = " . $value . "";
+
+
+    $result = executePlainSQL($query);
+
+    $arr = array();
+
+    array_push($arr, "Reservation ID");
+    array_push($arr, "Room Number");
+
+    OCICommit($db_conn);
+
+    if ($success == False) {
+        return;
+    }
+
+    printResult($result, $arr, 'Reservation and Room');
+    printSuccess("Successful Selection Operation");
+}
+
 function executePlainSQL($cmdstr)
 { //takes a plain (no bound variables) SQL command and executes it
     //echo "<br>running ".$cmdstr."<br>";
@@ -555,7 +616,7 @@ function connectToDB()
 
     // Your username is ora_(CWL_ID) and the password is a(student number). For example,
     // ora_platypus is the username and a12345678 is the password.
-    $db_conn = OCILogon("ora_henryk02", "a32523722", "dbhost.students.cs.ubc.ca:1522/stu");
+    $db_conn = OCILogon("ora_nilling4", "a65046468", "dbhost.students.cs.ubc.ca:1522/stu");
 
     if ($db_conn) {
         debugAlertMessage("Database is Connected");

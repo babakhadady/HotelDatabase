@@ -34,7 +34,7 @@
 
             </form>
 
-            <h3>For each floor that has more than X amount of available rooms, grab the cheapest available room</h3>
+            <h3>For each floor that has more than X available rooms, grab the cheapest available room</h3>
             <form method="GET" action="query-page.php"> <!--refresh page when submitted-->
                 <!-- <input type="hidden" id="havingQueryRequest" name="havingQueryRequest" value="true"> -->
                 <p class="formfield">
@@ -69,13 +69,13 @@
             </form>
 
 
-            <h3>Find reservation ID that reserved all rooms on selected floor</h3>
+            <h3>Find the reservation that reserved all rooms on selected floor</h3>
             <form method="GET" action="query-page.php"> <!--refresh page when submitted-->
                 <!-- <input type="hidden" id="divisionRequest" name="divisionRequest" value="true"> -->
               <p class="formfield">
                 <select name="floor-table" class="btn btn-secondary btn-sm">
                     <?php
-                    $tables = array("2", "3", "4", "5");
+                    $tables = array("2", "3", "4", "5", "6", "7", "8");
                     foreach ($tables as $table) {
                         echo '<option value="' . $table . '"' . (($_GET['floor-table'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
                     }

@@ -238,31 +238,31 @@ insert into roomContains values
 (200, 2, 'single', 'vacant', 150);
 
 insert into roomContains values
-(201, 2, 'single', 'vacant', 150);
+(201, 2, 'queen', 'vacant', 150);
 
 insert into roomContains values
 (202, 2, 'double', 'vacant', 200);
 
 insert into roomContains values
-(401, 2, 'double', 'vacant', 200);
+(401, 4, 'single', 'vacant', 200);
 
 insert into roomContains values
-(501, 2, 'double', 'vacant', 200);
+(501, 5, 'double', 'vacant', 200);
 
 insert into roomContains values
-(600, 2, 'double', 'vacant', 200);
+(600, 6, 'queen', 'vacant', 200);
 
 insert into roomContains values
-(601, 2, 'double', 'vacant', 200);
+(601, 6, 'double', 'vacant', 200);
 
 insert into roomContains values
-(602, 2, 'double', 'vacant', 200);
+(602, 6, 'king', 'vacant', 200);
 
 insert into roomContains values
-(701, 2, 'double', 'vacant', 200);
+(701, 7, 'double', 'vacant', 200);
 
 insert into roomContains values
-(801, 2, 'double', 'vacant', 200);
+(801, 8, 'master', 'vacant', 200);
 
 INSERT
 INTO reserves(reservation_id, room_number)
@@ -301,8 +301,7 @@ INTO reserves(reservation_id, room_number)
 VALUES (101237, 701);
 
 INSERT
-INTO reserves(reservation_id, room_number)
-VALUES (101238, 801);
+INTO reserves VALUES (101238, 801);
 
 insert into guest values
 ('123456', '24429988', 'Henry Kim', 'walkingbuddies2002@gmail.com');

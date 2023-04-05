@@ -46,14 +46,14 @@
         <hr />
 
         <div class="page">
-            <h2> Update Page </h2>
+            <h2> Manage Reservations </h2>
             <form method="POST" action="update-page.php">
-                <input type="submit" class='btn btn-sm btn-dark' alue="Query">
+                <input type="submit" class='btn btn-sm btn-dark' value="Go to Managagement Page">
             </form>
 
-            <h2> Query Page </h2>
+            <h2> Find Specific Rooms/Reservations</h2>
             <form method="POST" action="query-page.php">
-                <input type="submit" class='btn btn-sm btn-dark' value="Query">
+                <input type="submit" class='btn btn-sm btn-dark' value="Go to Query Page">
             </form>
 
 
@@ -62,7 +62,7 @@
                 <input type="submit" class='btn btn-sm btn-primary' name="viewReservations"></p>
             </form>
 
-            <h2>Select Certain Tuples From Reservation</h2>
+            <h2>Find Certain Reservations</h2>
             <form method="GET" action="cpsc304-project.php"> <!--refresh page when submitted-->
                 <input type="hidden" name="selectAttributeQueryRequest" />
                 Select a Column
@@ -98,8 +98,6 @@
                         ?>
                     </select>
                     <input type="submit" class="btn-sm btn btn-primary">
-
-
                 </p>
             </form>
             <form method="GET">
@@ -134,6 +132,27 @@
                 </div> <br />
             </form>
 
+            <h2>Join Reservations and Room on a Specific Condition</h2>
+            <form method="GET" action="cpsc304-project.php"> <!--refresh page when submitted-->
+                <input type="hidden" name="joinRequest" />
+                Select a Column
+                <select name="joinTable" class="btn btn-sm btn-secondary">
+                    <?php
+                    $tables = array("Reservation ID", "Start Date", "End Date", "Number", "Floor", "Type", "Status", "Price");
+                    foreach ($tables as $table) {
+                        echo '<option value="' . $table . '"' . '>' . $table . '</option>';
+                    }
+                    ?>
+                </select>
+                <br />
+
+                <p class="formfield">
+                    Value
+                    <input class="form-control" type="text" name="joinValue">
+                </p>
+                <input type="submit" class='btn btn-sm btn-primary'>
+            </form>
+
         </div>
 
 
@@ -166,6 +185,8 @@
                         // resetReservationsRequest();
                     } else if (isset($_GET['projectQueryRequest'])) {
                         projectTableRequest();
+                    } else if (isset($_GET['joinRequest'])) {
+                        joinTableRequest();
                     }
                     disconnectFromDB();
                 }
