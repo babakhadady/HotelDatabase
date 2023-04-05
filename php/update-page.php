@@ -25,88 +25,101 @@
     ?>
 
 
-        <div class="formfield">
-            <a href="cpsc304-project.php"> Back To Main Menu</a>
-        </div>
+    <div class="formfield">
+        <a href="cpsc304-project.php"> Back To Main Menu</a>
+    </div>
 
 
     <div class="body-container">
-        <div class="page">
-            <h2>View All Reservations </h2>
-            <form method="GET"> <!--refresh page when submitted-->
-                <input type="submit" class='btn btn-sm btn-primary' name="viewReservations"></p>
-            </form>
+        <div class="pageupdate">
+
+            <div class="update">
+                <h2>Update a Reservation</h2>
+                <form method="POST" action="update-page.php"> <!--refresh page when submitted-->
+                    <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+                    <p class="formfield">
+                        Reservation ID: <input type="text" class="form-control" name="updID">
+                    </p>
+                    <p class="formfield">
+                        Start Date: <input type="text" class="form-control" name="updStart">
+                    </p>
+                    <p class="formfield">
+                        End Date: <input type="text" class="form-control" name="updEnd">
+                    </p>
+
+                    <select name="selectTable" class="btn btn-sm btn-secondary">
+                        <?php
+                        $tables = array("Reservation ID", "Start Date", "End Date");
+                        foreach ($tables as $table) {
+                            echo '<option value="' . $table . '"' . '>' . $table . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <br />
+
+                    <p class="formfield">
+                        New Value: <input type="text" class="form-control" name="newVal">
+                    </p>
+
+                    <input type="submit" class='btn btn-sm btn-primary'></p>
+                </form>
 
 
-            <h2>Insert a Reservation</h2>
-            <form method="POST" action="update-page.php"> <!--refresh page when submitted-->
-                <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-                <div class="formfield">
-                    Reservation ID: <input type="text" class="form-control" name="insID"> 
-                </div>
 
-                <div class="formfield">
+                <h2>Delete a Reservation</h2>
+                <form method="GET" action="update-page.php"> <!--refresh page when submitted-->
+                    <p class="formfield">
+                        Reservation ID: <input type="text" class="form-control" name="delID">
+                        Start Date: <input type="text" class="form-control" name="delStart">
+                        End Date: <input type="text" class="form-control" name="delEnd">
+                    </p>
+                    <input type="submit" class='btn btn-sm btn-primary' name="deleteQueryRequest"></p>
+                </form>
 
-                    Start Date: <input type="text" class="form-control" name=" insStart"> 
-                </div>
-                <div class="formfield">
+            </div>
+            <div class="update">
+                <h2>View All Reservations </h2>
+                <form method="GET"> <!--refresh page when submitted-->
+                    <input type="submit" class='btn btn-sm btn-primary' name="viewReservations"></p>
+                </form>
 
-                    End Date: <input type="text" class="form-control" name=" insEnd"> 
-                </div>
-                <div class="formfield">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                  
 
-                    Room Number: <input type="text" class="form-control" name=" insRN"> 
-                </div>
-                <br/>
-                <input type="submit" class='btn btn-sm btn-primary'></p>
-            </form>
 
-            
+                <h2>Insert a Reservation</h2>
+                <form method="POST" action="update-page.php"> <!--refresh page when submitted-->
+                    <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
+                    <div class="formfield">
+                        Reservation ID: <input type="text" class="form-control" name="insID">
+                    </div>
 
-            <h2>Update a Reservation</h2>
-            <form method="POST" action="update-page.php"> <!--refresh page when submitted-->
-                <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-                <p class="formfield">
-                    Reservation ID: <input type="text" class="form-control" name="updID"> 
-                </p>
-                <p class="formfield">
-                    Start Date: <input type="text" class="form-control" name="updStart"> 
-                </p>
-                <p class="formfield">
-                    End Date: <input type="text" class="form-control" name="updEnd"> 
-                </p>
+                    <div class="formfield">
 
-                <select name="selectTable" class="btn btn-sm btn-secondary">
-                    <?php
-                    $tables = array("Reservation ID", "Start Date", "End Date");
-                    foreach ($tables as $table) {
-                        echo '<option value="' . $table . '"' . '>' . $table . '</option>';
-                    }
-                    ?>
-                </select>
-                <br/>
+                        Start Date: <input type="text" class="form-control" name=" insStart">
+                    </div>
+                    <div class="formfield">
 
-                <p class="formfield">
-                    New Value: <input type="text" class="form-control" name="newVal"> 
-                </p>
+                        End Date: <input type="text" class="form-control" name=" insEnd">
+                    </div>
+                    <div class="formfield">
 
-                <input type="submit" class='btn btn-sm btn-primary'></p>
-            </form>
+                        Room Number: <input type="text" class="form-control" name=" insRN">
+                    </div>
+                    <br />
+                    <input type="submit" class='btn btn-sm btn-primary'></p>
+                </form>
 
-            
-
-            <h2>Delete a Reservation</h2>
-            <form method="GET" action="update-page.php"> <!--refresh page when submitted-->
-                <p class="formfield">
-                    Reservation ID: <input type="text" class="form-control" name="delID"> 
-                    Start Date: <input type="text" class="form-control" name="delStart"> 
-                    End Date: <input type="text" class="form-control" name="delEnd"> 
-                </p>
-                <input type="submit" class='btn btn-sm btn-primary' name="deleteQueryRequest"></p>
-            </form>
-
+            </div>
         </div>
-
 
         <div class="results">
             <?php

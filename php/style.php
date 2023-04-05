@@ -16,7 +16,7 @@ margin-right: auto;
 }
 
 table {
-  margin-bottom: 20px;
+margin-bottom: 20px;
 }
 
 
@@ -26,6 +26,8 @@ flex-direction: row;
 align-items: center;
 justify-content: center;
 }
+
+
 
 tr, th {
 border: 1px solid #ddd;
@@ -49,19 +51,35 @@ padding-right: 10px;
 
 .page {
 background-color: #FFFFFF;
-margin: 20px;
+margin: 15px;
 display: flex;
 align-items: center;
 flex-direction: column;
+padding-left: 20px;
+padding-right: 20px;
+border-radius: 15px;
+padding-top: 20px;
+}
+
+.pageupdate {
+  background-color: #FFFFFF;
+margin: 20px;
+display: flex;
+align-items: center;
+flex-direction: row;
 padding-left: 40px;
 padding-right: 40px;
 border-radius: 15px;
 padding-top: 20px;
 }
 
-
-div {
-
+update {
+margin: 20px;
+display: flex;
+flex-direction: column;
+padding-left: 40px;
+padding-right: 40px;
+border-radius: 15px;
 }
 
 body {
@@ -84,9 +102,9 @@ hr {
 }
 
 br {
-    line-height: 10px;
- }
- 
+line-height: 10px;
+}
+
 form {
 display:flex;
 align-items: center;
@@ -94,7 +112,7 @@ flex-direction: column;
 }
 
 h1 {
-  padding-top: 10px;
+padding-top: 10px;
 text-align: center;
 color: #FFFFFF !important;
 }
@@ -138,23 +156,23 @@ padding-top: 20px;
 }
 
 a {
-  text-decoration: none;
-  
+text-decoration: none;
+
 }
 
 a:hover {
-  text-decoration: none;
+text-decoration: none;
 }
 
 .roworder {
-  display: flex;
-  flex-direction: row;
+display: flex;
+flex-direction: row;
 }
 
 select {
-  margin-right: 10px;
+margin-right: 10px;
 }
 
 input[type="text"] {
-    height: 30px;
+height: 30px;
 }
