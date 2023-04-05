@@ -213,11 +213,11 @@ CREATE TABLE Creates(
 
 grant select on Creates to public;
 
-insert into reservations values
-('jan 1', 'jan 2', 1);
+-- insert into reservations values
+-- ('jan 1', 'jan 2', 1);
 
-insert into reservations values
-('jan 4', 'jan 7', 6);
+-- insert into reservations values
+-- ('jan 4', 'jan 7', 6);
 
 insert into reservations values
 ('jan 4', 'jan 7', 101234);
@@ -250,13 +250,31 @@ insert into roomContains values
 (501, 2, 'double', 'vacant', 200);
 
 insert into roomContains values
+(600, 2, 'double', 'vacant', 200);
+
+insert into roomContains values
 (601, 2, 'double', 'vacant', 200);
+
+insert into roomContains values
+(602, 2, 'double', 'vacant', 200);
 
 insert into roomContains values
 (701, 2, 'double', 'vacant', 200);
 
 insert into roomContains values
 (801, 2, 'double', 'vacant', 200);
+
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101234, 200);
+
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101234, 201);
+
+INSERT
+INTO reserves(reservation_id, room_number)
+VALUES (101234, 202);
 
 INSERT
 INTO reserves(reservation_id, room_number)
