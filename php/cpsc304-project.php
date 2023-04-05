@@ -70,11 +70,11 @@
     <form method="GET"  action="cpsc304-project.php"> <!--refresh page when submitted-->
     <input type="hidden" name="selectAttributeQueryRequest" />
             Select a Column:
-            <select name="projectTable">
+            <select name="selectTable">
                 <?php
-                $tables = array("start_date", "end_date", "reservation_id");
+                $tables = array("Reservation ID", "Start Date", "End Date");
                 foreach ($tables as $table) {
-                    echo '<option value="' . $table . '"' . (($_GET['projectTable'] == $table) ? 'selected = selected' : '') . '>' . $table . '</option>';
+                    echo '<option value="' . $table . '"' . '>' . $table . '</option>';
                 }
                 ?>
             </select>
@@ -142,7 +142,7 @@
     {
         if (connectToDB()) {
             if (array_key_exists('selectAttributeQueryRequest', $_GET)) {
-                selectAttributeQueryRequest($_GET["selectID"], $_GET["selectStart"], $_GET["selectEnd"]);
+                selectAttributeQueryRequest();
             } else if (array_key_exists('viewReservations', $_GET)) {
                 viewReservationsRequest();
             } else if (isset($_GET['resetTablesRequest'])) {

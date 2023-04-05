@@ -40,20 +40,31 @@
     <hr />
 
     <h2>Update a Reservation</h2>
-    <form method="POST" action="cpsc304-project.php"> <!--refresh page when submitted-->
+    <form method="POST" action="update-page.php"> <!--refresh page when submitted-->
         <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
         <p class="formfield">
             Reservation ID: <input type="text" name="updID"> <br /><br />
         </p>
         <p class="formfield">
-            New Start Date: <input type="text" name="updStart"> <br /><br />
+            Start Date: <input type="text" name="updStart"> <br /><br />
         </p>
         <p class="formfield">
-            New End Date: <input type="text" name="updEnd"> <br /><br />
+            End Date: <input type="text" name="updEnd"> <br /><br />
         </p>
+
+        <select name="selectTable">
+            <?php
+            $tables = array("Reservation ID", "Start Date", "End Date");
+            foreach ($tables as $table) {
+                echo '<option value="' . $table . '"' . '>' . $table . '</option>';
+            }
+            ?>
+        </select>
+
         <p class="formfield">
-            New Room Number: <input type="text" name="updRN"> <br /><br />
+            New Value: <input type="text" name="newVal"> <br /><br />
         </p>
+
         <input type="submit"></p>
     </form>
 
@@ -88,7 +99,12 @@
                     deleteQueryRequest($_GET["delID"]);
                 } else {
                     echo '<p> Error: Missing a Reservation ID </p>';
-
+                }
+            } else if (array_key_exists('updateQueryRequest', $_POST)) {
+                if (isset($_POST["updID"]) || isset($_GET["updStart"]) || isset($_GET["updEnd"])) {
+                    updateQueryRequest();
+                } else {
+                    echo '<p> Error: Missing a Reservation ID </p>';
                 }
             }
             disconnectFromDB();

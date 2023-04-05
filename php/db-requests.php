@@ -16,66 +16,101 @@ function debugAlertMessage($message)
     }
 }
 
-// function resetReservationsRequest() {
-// global $db_conn;
-// $result = executePlainSQL("create table reservations
-// (start_date varchar(20) not null,
-// end_date varchar(40) not null,
-// reservation_id int not null,
-// primary key (reservation_id))");
+function updateQueryRequest() {
+    global $db_conn;
 
-// echo $result;
-
-// OCICommit($db_conn);
-// }
+    $array = array();
+    $columns = array();
+    $count = 1;
 
 
+    if ($_POST["updID"] != "") {
+        array_push($array, "reservation_id = " . $_POST["updID"]);
+        array_push($columns, "Reservation ID");
+        $count++;
+    }
 
-function selectAttributeQueryRequest($id, $start, $end)
+    if ($_POST["updStart"] != "") {
+        array_push($array, "start_date = " . "'" . $_POST["updStart"] . "'");
+        array_push($columns, "Start Date");
+        $count++;
+    }
+
+    if ($_POST["updEnd"] != "") {
+        array_push($array, "end_date = " . "'" . $_POST["updEnd"] . "'");
+        array_push($columns, "End Date");
+        $count++;
+    }
+    
+    $newVal = $_POST['newVal'];
+    $queryString = "UPDATE reservations SET ";
+
+
+    $selectTable = $_POST['selectTable'];
+
+    if ($selectTable == "Reservation ID") {
+        $queryString = $queryString . "reservation_id = " . $newVal . " ";
+    }
+
+    if ($selectTable == "Start Date") {
+        $queryString = $queryString . "start_date = '" . $newVal . "' ";
+    }
+
+    if ($selectTable == "End Date") {
+        $queryString = $queryString . "end_date = '" . $newVal . "' ";
+    }
+
+
+    $queryString = $queryString . "WHERE ";
+
+
+    for ($x = 0; $x < $count - 1; $x++) {
+        if ($x + 1 < $count - 1) {
+            $queryString = $queryString . $array[$x] . " AND ";
+        } else {
+            $queryString = $queryString . $array[$x];
+        }
+    }
+
+    executePlainSQL($queryString);
+    OCICommit($db_conn);
+
+}
+
+
+function selectAttributeQueryRequest()
 {
     global $db_conn;
     $value = $_GET['whereBody'];
-    $column = $_GET['projectTable'];
+    $column = $_GET['selectTable'];
 
     if (empty($value)) {
         return;
     }
-    $query = "select * from reservations where " . $column . " = " . $value;
 
-    echo $query;
+    if ($column == "Start Date") {
+        $column = "start_date";
+    }
+    if ($column == "End Date") {
+        $column = "end_date";
+    }
+    if ($column == "Reservation ID") {
+        $column = "reservation_id";
+    }
+
+    $query = "select * from reservations where " . $column . " = '" . $value . "'";
 
     $result = executePlainSQL($query);
 
     $arr = array();
 
-    array_push($arr, "reservation_id");
-    array_push($arr, "start_date");
-    array_push($arr, "end_date");
+    array_push($arr, "Reservation ID");
+    array_push($arr, "Start Date");
+    array_push($arr, "End Date");
 
-    printResult($result, $arr, 'reservations');
+    printResult($result, $arr, 'Reservation');
     OCICommit($db_conn);
 
-    // select * from reservations where reservation_id = 6
-
-    // $tuple = array();
-
-    // $query = "select from reservation where";
-
-    // $count = 0;
-    // foreach($tuple as $val) {
-    //     if ($count == 1 || $count == 2) {
-    //         $query = $query . "AND" . $val;
-    //     } else {
-    //         $query = $query . $val;
-    //     }
-
-    //     $count++;
-    // }
-
-    // $result = 
-
-    // // printResult($result);
-    // executeBoundSQL("select from " . $val . " (:bind1, :bind2, :bind3)", $reservationstuples);
 }
 
 
@@ -169,7 +204,7 @@ function projectTableRequest()
 
     $queryString = $queryString . "FROM " . $val;
 
-   $result = executePlainSQL($queryString);
+    $result = executePlainSQL($queryString);
 
     printResult($result, $columns, $_GET['projectQueryRequest']);
     OCICommit($db_conn);
@@ -213,7 +248,7 @@ function updateRoomStatusToOccupied($rn)
     OCICommit($db_conn);
 }
 
-function deleteQueryRequest($id)
+function deleteQueryRequest()
 {
     global $db_conn;
 
@@ -229,18 +264,18 @@ function deleteQueryRequest($id)
     }
 
     if ($_GET["delStart"] != "") {
-        array_push($array, "start_date = " . "'" . $_GET["delStart"] ."'");
+        array_push($array, "start_date = " . "'" . $_GET["delStart"] . "'");
         array_push($columns, "Start Date");
         $count++;
     }
 
     if ($_GET["delEnd"] != "") {
-        array_push($array, "end_date = " . "'" . $_GET["delEnd"] ."'");
+        array_push($array, "end_date = " . "'" . $_GET["delEnd"] . "'");
         array_push($columns, "End Date");
         $count++;
     }
 
-    
+
     $queryString = "DELETE FROM reservations WHERE ";
 
     for ($x = 0; $x < $count - 1; $x++) {
