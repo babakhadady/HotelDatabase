@@ -1,5 +1,6 @@
 # Hotel Management Database
 
+**No extra information.**
 
 **CPSC 304 Project Cover Page**
 
