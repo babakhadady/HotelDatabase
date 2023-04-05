@@ -47,15 +47,15 @@
 
                 <div class="formfield">
 
-                    Start Date: <input type="text" class="form-control name=" insStart"> 
+                    Start Date: <input type="text" class="form-control" name=" insStart"> 
                 </div>
                 <div class="formfield">
 
-                    End Date: <input type="text" class="form-control name=" insEnd"> 
+                    End Date: <input type="text" class="form-control" name=" insEnd"> 
                 </div>
                 <div class="formfield">
 
-                    Room Number: <input type="text" class="form-control name=" insRN"> 
+                    Room Number: <input type="text" class="form-control" name=" insRN"> 
                 </div>
                 <br/>
                 <input type="submit" class='btn btn-sm btn-primary'></p>
